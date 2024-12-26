@@ -1,39 +1,38 @@
 import React, { useState } from "react";
-import { Text, View, StyleSheet, Image, TouchableOpacity, Platform } from "react-native";
-import { router, Link } from "expo-router";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
 import Constants from "expo-constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PasswordEmail } from "@/types/auth-data";
-import emailPasswordSchema from "@/schemas/email-password";
+import { TokenType } from "@/types/auth-data";
+import tokenResetPasswordSchema from "@/schemas/token-reset-password";
 import { ControlledInput } from "@/components";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView, ScrollView } from "react-native";
+import { Link, router } from "expo-router";
 
-export default function Login() {
-  const [showPassword, setShowPassword] = useState(true);
-
+export default function InsertToken() {
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<PasswordEmail>({
+  } = useForm<TokenType>({
     mode: "onChange",
     defaultValues: {
-      email: "",
-      password: "",
+      token: "",
     },
-    resolver: zodResolver(emailPasswordSchema),
+    resolver: zodResolver(tokenResetPasswordSchema),
   });
-
-  const toggleShowPassword = () => {
-    setShowPassword((prevState) => !prevState);
-  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -42,72 +41,37 @@ export default function Login() {
           <Box style={styles.logoHome}>
             <Image
               style={styles.sizeLogo}
-              source={require("../assets/images/logo-lab-animal.png")}
+              source={require("../../../assets/images/logo-lab-animal.png")}
             />
           </Box>
-          <Text style={styles.textHeader}>Login</Text>
+          <Text style={styles.textHeader}>Recuperar senha</Text>
           <Box style={styles.containerForm}>
             <View style={styles.contaienerInputs}>
               <ControlledInput
                 control={control}
-                name="email"
-                placeholder="Insira seu email"
+                name="token"
+                keyboardType="number-pad"
+                placeholder="Insira o token enviado para o email"
                 placeholderColor={Colors.dark.text}
-                label="Email"
+                label="Token"
                 autoCapitalize="none"
-                keyboardType="email-address"
                 leftIcon={
                   <MaterialIcons
-                    name="alternate-email"
+                    name="generating-tokens"
                     size={24}
                     color={Colors.light.background}
                   />
                 }
-                errorMessage={errors?.email?.message}
+                errorMessage={errors?.token?.message}
                 borderColorInputFocus={Colors.light.text}
                 borderColorInputBlur="#7589A4"
                 backgroundColorInput="#7589A4"
               />
-              <View>
-                <ControlledInput
-                  control={control}
-                  name="password"
-                  placeholder="Insira sua senha"
-                  placeholderColor="#ddd"
-                  label="Senha"
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                  leftIcon={
-                    <Ionicons
-                      name="lock-closed-outline"
-                      size={24}
-                      color={Colors.light.background}
-                    />
-                  }
-                  rightIcon={
-                    <Ionicons
-                      name={showPassword ? "eye-outline" : "eye-off-outline"}
-                      size={24}
-                      color={Colors.light.background}
-                      onPress={toggleShowPassword}
-                    />
-                  }
-                  errorMessage={errors?.password?.message}
-                  borderColorInputFocus={Colors.light.text}
-                  borderColorInputBlur="#7589A4"
-                  backgroundColorInput="#7589A4"
-                />
-              </View>
-              <View style={styles.containerForgotPassword}>
-                <Link href="/(not-authenticated)/forgot-password/page">
-                  <Text style={styles.forgotPasswordLink}>
-                    Esqueci minha senha
-                  </Text>
-                </Link>
-              </View>
               <View style={styles.buttonSubmitContainer}>
                 <TouchableOpacity
-                  onPress={() => router.navigate("/(authenticated)")}
+                  onPress={() =>
+                    router.navigate("/(not-authenticated)/reset-password/page")
+                  }
                 >
                   <LinearGradient
                     colors={["#35629d", Colors.light.background]}
@@ -115,14 +79,14 @@ export default function Login() {
                     end={{ x: 0, y: 1 }}
                     style={styles.buttonSubmit}
                   >
-                    <Text style={styles.textButtonSubmit}>Entrar</Text>
+                    <Text style={styles.textButtonSubmit}>Prosseguir</Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
               <View style={styles.containerCreateAccout}>
-                <Link href="/(not-authenticated)/signup/page">
+                <Link href="/">
                   <Text style={[styles.textCreateAccout]}>
-                    Ainda não tem uma conta? Cadastre-se
+                    Já tem uma conta? Faça o login
                   </Text>
                 </Link>
               </View>
@@ -137,7 +101,6 @@ export default function Login() {
 const styles = StyleSheet.create({
   containter: {
     flex: 1,
-    position: 'relative',
   },
   logoHome: {
     alignItems: "center",
@@ -147,7 +110,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   textSize: {
-    fontSize: 40,
+    fontSize: 30,
   },
   containerForm: {
     width: "100%",
@@ -157,16 +120,9 @@ const styles = StyleSheet.create({
     width: "85%",
     height: "100%",
   },
-  containerForgotPassword: {
-    marginTop: Platform.OS === "ios" ? 5 : 1,
-  },
-  forgotPasswordLink: {
-    color: Colors.light.text,
-    fontSize: 12,
-    textAlign: "right"
-  },
   buttonSubmitContainer: {
     alignSelf: "center", // Centers the button horizontally
+    marginTop: 30,
   },
   buttonSubmit: {
     padding: 15,
@@ -174,7 +130,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center", // Centers the content within the View
     justifyContent: "center", // Aligns the content vertically
-    marginTop: 15
   },
   textButtonSubmit: {
     color: "white",
@@ -187,7 +142,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 5,
   },
-  textCreateAccout: { fontSize: 12, color: Colors.light.text },
+  textCreateAccout: { fontSize: 14, color: Colors.light.text },
   textHeader: {
     color: Colors.light.text,
     fontSize: 30,
