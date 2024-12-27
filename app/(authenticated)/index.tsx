@@ -1,116 +1,58 @@
-import { Image, StyleSheet, Platform, Text, Button } from "react-native";
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import React from "react";
 import {
-  Drawer,
-  DrawerBackdrop,
-  DrawerContent,
-  DrawerHeader,
-  DrawerCloseButton,
-  DrawerBody,
-  DrawerFooter,
-} from "@/components/ui/drawer";
-
+  Image,
+  StyleSheet,
+  Text,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
+import { DrawerMenu } from "@/components";
+import { Colors } from "@/constants/Colors";
+import { Box } from "@/components/ui/box";
+import { Link } from "expo-router";
 export default function HomeScreen() {
-  const [showDrawer, setShowDrawer] = React.useState(false);
-  const [categories, setCategories] = React.useState([]);
-  const [brands, setBrands] = React.useState([]);
-  const [colors, setColors] = React.useState([]);
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <>
-        <Button
-          title="Open Drawer"
-          onPress={() => {
-            setShowDrawer(true);
-          }}
-        ></Button>
-        <Drawer
-          isOpen={showDrawer}
-          onClose={() => {
-            setShowDrawer(false);
-          }}
-        >
-          <DrawerBackdrop />
-          <DrawerContent className="px-4 py-3 w-[270px] md:w-[300px]">
-            <DrawerHeader>
-              <Button
-                title="Clear Filters"
-                onPress={() => {
-                  setCategories([]);
-                  setBrands([]);
-                  setColors([]);
-                }}
-              ></Button>
-            </DrawerHeader>
-            <DrawerBody className="gap-4 mt-0 mb-0"></DrawerBody>
-          </DrawerContent>
-        </Drawer>
-      </>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: "cmd + d", android: "cmd + m" })}
-          </ThemedText>{" "}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this
-          starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{" "}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText>{" "}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
-          directory. This will move the current{" "}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: Colors.light.background }}>
+        <Box className="bg-primary-500" style={styles.containter}>
+          <DrawerMenu />
+          <Box style={styles.containerHome}>
+            <Image
+              style={styles.sizeLogo}
+              source={require("../../assets/images/logo-lab-animal.png")}
+            />
+            <Text style={styles.textLogo}>LabAnimal</Text>
+            <Text style={styles.textLogo}>Navigator</Text>
+            <Text style={{ ...styles.textTopics, marginTop: 80 }}>Tópicos</Text>
+            <Link href="/" style={{ ...styles.textTopics, marginTop: 10 }}>
+              Link para a lista de A-Z
+            </Link>
+          </Box>
+        </Box>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
+  containter: {
+    flex: 1,
+    position: "relative",
+  },
+  containerHome: {
     alignItems: "center",
-    gap: 8,
+    marginTop: 80,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  sizeLogo: {
+    width: 150,
+    height: 100,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  textLogo: {
+    color: Colors.light.text,
+    fontSize: 50,
+  },
+  textTopics: {
+    color: Colors.light.text,
+    fontSize: 15,
   },
 });
