@@ -1,3 +1,5 @@
 import { ControlledInput } from "./ControlledInput";
+import { Divider } from "./Divider";
+import { DrawerMenu } from "./DrawerMenu";
 
-export { ControlledInput };
+export { ControlledInput, Divider, DrawerMenu };
