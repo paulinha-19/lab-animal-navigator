@@ -1,8 +1,8 @@
 import { Tabs } from "expo-router";
 import React from "react";
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -10,18 +10,34 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: "white",
         headerShown: false,
+        tabBarStyle: {
+          borderTopWidth: 0,
+          backgroundColor: "transparent",
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+        },
+        tabBarBackground: () => (
+          <LinearGradient
+            colors={["#35629d", "#153d72"]}
+            style={{ flex: 1 }}
+            start={{ x: -0.8, y: 1 }}
+            end={{ x: 1.2, y: 1 }}
+          />
+        ),
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Início",
+
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "home" : "home-outline"}
-              color={color}
+              color={focused ? "white" : color}
             />
           ),
         }}
@@ -33,7 +49,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "code-slash" : "code-slash-outline"}
-              color={color}
+              color={focused ? "white" : color}
             />
           ),
         }}
