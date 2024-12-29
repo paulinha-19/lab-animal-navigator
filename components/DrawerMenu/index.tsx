@@ -21,7 +21,7 @@ export const DrawerMenu = () => {
   const [showDrawer, setShowDrawer] = useState(false);
 
   return (
-    <Box style={styles.containerDrawer}>
+    <Box>
       <LinearGradient
         colors={["#35629d", "#153d72"]}
         style={styles.circularGradient}
@@ -102,11 +102,6 @@ export const DrawerMenu = () => {
 };
 
 const styles = StyleSheet.create({
-  containerDrawer: {
-    flexDirection: "column",
-    height: 40,
-    width: "100%",
-  },
   circularGradient: {
     width: "100%",
     height: 40,
