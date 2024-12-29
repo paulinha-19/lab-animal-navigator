@@ -107,7 +107,7 @@ export default function Login() {
               </View>
               <View style={styles.buttonSubmitContainer}>
                 <TouchableOpacity
-                  onPress={() => router.navigate("/(authenticated)")}
+                  onPress={() => router.navigate("/(authenticated)/(tabs)/home")}
                 >
                   <LinearGradient
                     colors={["#35629d", Colors.light.background]}
