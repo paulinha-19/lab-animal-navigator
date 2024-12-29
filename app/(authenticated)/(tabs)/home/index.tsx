@@ -9,7 +9,7 @@ import {
 import { DrawerMenu } from "@/components";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 export default function HomeScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -19,14 +19,17 @@ export default function HomeScreen() {
           <Box style={styles.containerHome}>
             <Image
               style={styles.sizeLogo}
-              source={require("../../assets/images/logo-lab-animal.png")}
+              source={require("../../../../assets/images/logo-lab-animal.png")}
             />
             <Text style={styles.textLogo}>LabAnimal</Text>
             <Text style={styles.textLogo}>Navigator</Text>
             <Text style={{ ...styles.textTopics, marginTop: 80 }}>Tópicos</Text>
-            <Link href="/" style={{ ...styles.textTopics, marginTop: 10 }}>
-              Link para a lista de A-Z
-            </Link>
+            <Text
+              onPress={() => router.navigate("/(authenticated)/topics/search-topics")}
+              style={{ ...styles.textTopics, marginTop: 10 }}
+            >
+              Clique aqui e pesquise por um assunto
+            </Text>
           </Box>
         </Box>
       </ScrollView>
