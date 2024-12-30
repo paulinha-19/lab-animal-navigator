@@ -32,7 +32,6 @@ export default function TabLayout() {
         name="home/index"
         options={{
           title: "Início",
-
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
               name={focused ? "home" : "home-outline"}
@@ -42,12 +41,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explorer/index"
+        name="bot-lana/index"
         options={{
-          title: "Explore",
+          title: "LANA",
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
+              name={focused ? "chatbubble-ellipses" : "chatbubble-ellipses-outline"}
               color={focused ? "white" : color}
             />
           ),
