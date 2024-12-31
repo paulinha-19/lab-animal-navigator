@@ -26,10 +26,6 @@ import {
 import { Center } from "@/components/ui/center";
 import { Button, ButtonText } from "@/components/ui/button";
 import { SPECIES, LINEAGE, PHASELIFE } from "@/data/calculation";
-import {
-  onSubmit,
-  handleCloseModal,
-} from "@/utils/calculationAdministeredUtils";
 
 export default function CalculationAdministeredScreen() {
   const [results, setResults] = useState<{
@@ -39,6 +35,7 @@ export default function CalculationAdministeredScreen() {
     lineage: string;
     phase: string;
   } | null>(null);
+
   const [showModal, setShowModal] = useState(false);
 
   const {
@@ -57,6 +54,33 @@ export default function CalculationAdministeredScreen() {
     },
     resolver: zodResolver(calculationAdministeredSchema),
   });
+
+  const onSubmit = (data: CalculationAdministeredForm) => {
+    const numberAnimals = parseFloat(data.numberAnimals as any);
+    const amountFeed = parseFloat(data.amountFeed as any);
+
+    if (!isNaN(numberAnimals) && !isNaN(amountFeed)) {
+      const grams = numberAnimals * amountFeed;
+      const kg = grams / 1000;
+
+      setResults({
+        grams,
+        kg,
+        species: data.selectSpecies,
+        lineage: data.selectLineage,
+        phase: data.selectPhaseLife,
+      });
+      setShowModal(true);
+    } else {
+      console.error("Os valores fornecidos não são números válidos.");
+    }
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    reset();
+    setResults(null);
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -125,11 +149,7 @@ export default function CalculationAdministeredScreen() {
           />
         </View>
         <View style={styles.buttonSubmitContainer}>
-          <TouchableOpacity
-            onPress={handleSubmit((data) =>
-              onSubmit(data, setResults, setShowModal)
-            )}
-          >
+          <TouchableOpacity onPress={handleSubmit(onSubmit)}>
             <LinearGradient
               colors={["#35629d", Colors.light.background]}
               start={{ x: 0, y: 0 }}
@@ -142,11 +162,7 @@ export default function CalculationAdministeredScreen() {
         </View>
       </ScrollView>
       <Center>
-        <Modal
-          isOpen={showModal}
-          onClose={() => handleCloseModal(setShowModal, reset, setResults)}
-          size="md"
-        >
+        <Modal isOpen={showModal} onClose={handleCloseModal} size="md">
           <ModalBackdrop />
           <ModalContent>
             <ModalHeader>
@@ -156,12 +172,7 @@ export default function CalculationAdministeredScreen() {
               {results && <CalculationAdministeredResults results={results} />}
             </ModalBody>
             <ModalFooter>
-              <Button
-                variant="solid"
-                onPress={() =>
-                  handleCloseModal(setShowModal, reset, setResults)
-                }
-              >
+              <Button variant="solid" onPress={handleSubmit(onSubmit)}>
                 <ButtonText>Fechar</ButtonText>
               </Button>
             </ModalFooter>
@@ -201,5 +212,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: Colors.light.background,
-  }
+  },
 });
