@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import { Controller, UseControllerProps, FieldValues } from "react-hook-form";
 import { Colors } from "@/constants/Colors";
 import {
@@ -8,6 +8,7 @@ import {
   View,
   StyleSheet,
 } from "react-native";
+import { useInputFocus } from "@/hooks/useInputFocus";
 
 type AditionalInput = {
   label?: string;
@@ -15,6 +16,7 @@ type AditionalInput = {
   rightIcon?: ReactNode;
   errorMessage?: string;
   errorColor?: string;
+  sizeError?: number;
   paddingBottom?: number;
   paddingTop?: number;
   placeholderColor?: string;
@@ -25,6 +27,8 @@ type AditionalInput = {
   borderRadius?: number;
   colorLabel?: string;
   sizeLabel?: number;
+  heightInput?: number;
+  keyboardType?: TextInputProps["keyboardType"];
 } & TextInputProps;
 
 export function ControlledInput<FormType extends FieldValues>({
@@ -34,6 +38,7 @@ export function ControlledInput<FormType extends FieldValues>({
   rightIcon,
   errorMessage,
   errorColor = "red",
+  sizeError = 12,
   paddingBottom,
   paddingTop,
   label,
@@ -45,23 +50,30 @@ export function ControlledInput<FormType extends FieldValues>({
   borderColorInputBlur,
   backgroundColorInput = Colors.light.text,
   borderRadius = 8,
+  heightInput = 50,
+  keyboardType,
   ...textInputProps
 }: UseControllerProps<FormType> & AditionalInput) {
-  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const { handleBlur, handleFocus, isFocused } = useInputFocus();
 
-  const handleFocus = () => {
-    setIsFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false);
+  const onChangeText = (text: string, onChange: (...event: any[]) => void) => {
+    if (
+      keyboardType === "numeric" ||
+      keyboardType === "number-pad" ||
+      keyboardType === "decimal-pad"
+    ) {
+      const parsedValue = parseFloat(text);
+      onChange(text === "" ? text : isNaN(parsedValue) ? "" : parsedValue);
+    } else {
+      onChange(text);
+    }
   };
 
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field: { onChange, value }, fieldState: { error } }) => (
         <View style={styles.container}>
           {label && (
             <Text
@@ -87,15 +99,18 @@ export function ControlledInput<FormType extends FieldValues>({
             )}
             <TextInput
               {...textInputProps}
-              onChangeText={field.onChange}
+              keyboardType={keyboardType}
+              onChangeText={(text) => onChangeText(text, onChange)}
               onBlur={handleBlur}
               onFocus={handleFocus}
-              value={field.value}
+              value={value?.toString() || ""}
               placeholderTextColor={placeholderColor}
               style={[
                 {
                   color: inputTextColor,
                   backgroundColor: backgroundColorInput,
+                  height: heightInput,
+                  fontSize: 18,
                 },
                 textInputProps.style,
                 styles.input,
@@ -105,7 +120,12 @@ export function ControlledInput<FormType extends FieldValues>({
               <View style={styles.iconRightContainer}>{rightIcon}</View>
             )}
             {errorMessage && (
-              <Text style={[styles.errorMessage, { color: errorColor }]}>
+              <Text
+                style={[
+                  styles.errorMessage,
+                  { color: errorColor, fontSize: sizeError },
+                ]}
+              >
                 {errorMessage}
               </Text>
             )}
@@ -142,7 +162,6 @@ const styles = StyleSheet.create({
   input: {
     flex: 1, // The input field takes up the remaining space
     borderRadius: 8,
-    height: 50,
   },
   errorMessage: {
     position: "absolute",

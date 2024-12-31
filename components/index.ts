@@ -4,7 +4,7 @@ import { DrawerMenu } from "./DrawerMenu";
 import { SectionItem } from "./SectionItem";
 import { AlphabetList } from "./AlphabetList";
 import { SearchInfo } from "./SearchInfo";
-
+import { CalculationAdministeredResults } from "./Calculalation/CalculationAdministeredResults";
 export {
   ControlledInput,
   Divider,
@@ -12,4 +12,5 @@ export {
   SectionItem,
   AlphabetList,
   SearchInfo,
+  CalculationAdministeredResults
 };
