@@ -16,10 +16,10 @@ import {
 import { Button, ButtonText } from "@/components/ui/button";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
+import { navigateTo } from "@/utils/drawer-menu";
 
 export const DrawerMenu = () => {
   const [showDrawer, setShowDrawer] = useState(false);
-
   return (
     <Box>
       <LinearGradient
@@ -54,18 +54,20 @@ export const DrawerMenu = () => {
               <AntDesign name="book" size={24} color={Colors.light.text} />
               <Text style={styles.textDrawer}>Biologia e manejo</Text>
             </Pressable>
-
             <Pressable style={styles.bodyDrawerContainer}>
               <AntDesign name="book" size={24} color={Colors.light.text} />
               <Text style={styles.textDrawer}>Experimentação</Text>
             </Pressable>
-
             <Pressable style={styles.bodyDrawerContainer}>
               <AntDesign name="book" size={24} color={Colors.light.text} />
               <Text style={styles.textDrawer}>Legislação</Text>
             </Pressable>
-
-            <Pressable style={styles.bodyDrawerContainer}>
+            <Pressable
+              style={styles.bodyDrawerContainer}
+              onPress={() =>
+                navigateTo("/calculations/calculations", setShowDrawer, router)
+              }
+            >
               <AntDesign
                 name="calculator"
                 size={24}

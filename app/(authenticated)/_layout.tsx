@@ -11,17 +11,43 @@ export default function AuthenticatedLayout() {
           name="topics/search-topics"
           options={{
             title: "Tópicos",
-            headerTitleStyle: { fontSize: 20 },
+            headerTitleStyle: { fontSize: 16 },
             headerStyle: { backgroundColor: "#153d72" },
             headerTintColor: "#fff",
-         
           }}
         />
         <Stack.Screen
           name="topics/az-list"
           options={{
             title: "A-Z",
-            headerTitleStyle: { fontSize: 20 },
+            headerTitleStyle: { fontSize: 16 },
+            headerStyle: { backgroundColor: "#153d72" },
+            headerTintColor: "#fff",
+          }}
+        />
+        <Stack.Screen
+          name="calculations/calculations"
+          options={{
+            title: "Cálculos",
+            headerTitleStyle: { fontSize: 16 },
+            headerStyle: { backgroundColor: "#153d72" },
+            headerTintColor: "#fff",
+          }}
+        />
+        <Stack.Screen
+          name="calculations/calculation-doses"
+          options={{
+            title: "Cálculo de doses",
+            headerTitleStyle: { fontSize: 16 },
+            headerStyle: { backgroundColor: "#153d72" },
+            headerTintColor: "#fff",
+          }}
+        />
+        <Stack.Screen
+          name="calculations/calculation-administered"
+          options={{
+            title: "Cálculo de quantidade de ração administrada",
+            headerTitleStyle: { fontSize: 16 },
             headerStyle: { backgroundColor: "#153d72" },
             headerTintColor: "#fff",
           }}
