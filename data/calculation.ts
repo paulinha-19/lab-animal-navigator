@@ -1,0 +1,40 @@
+export const SPECIES = ["Rato", "Hamster", "Camundongo", "Cobaia"];
+
+export const LINEAGE = [
+  "Golden/Sírio",
+  "Chinês",
+  "KK/HIJ",
+  "NZB/BlNJ",
+  "BALB/cByJ",
+  "C3H/HeJ",
+  "C57BL/6J",
+  "AKR/J",
+  "CBA/J",
+  "NOD/LtJ",
+  "SWR/J",
+  "PL/J",
+  "DBA/2J",
+  "129P3/J",
+  "FVB/NJ",
+  "LP/J",
+  "A/J",
+  "BUB/BnJ",
+  "C57L/J",
+  "RIIIS/J",
+  "PJ",
+  "CE/J",
+  "SEA/GnJ",
+  "SJL/J",
+  "RF/J",
+  "SWR/J",
+  "RBF/DnJ",
+  "SM/J",
+  "SPRET/Ei",
+  "CAST/Ei",
+];
+
+export const PHASELIFE = [
+  "adulto",
+  "juvenil (crescimento)",
+  "fêmea em lactação ou gestação",
+];
