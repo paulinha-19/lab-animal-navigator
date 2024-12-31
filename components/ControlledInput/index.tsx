@@ -9,7 +9,6 @@ import {
   StyleSheet,
 } from "react-native";
 import { useInputFocus } from "@/hooks/useInputFocus";
-import { onChangeText } from "@/utils/controlled-input";
 
 type AditionalInput = {
   label?: string;
@@ -56,6 +55,19 @@ export function ControlledInput<FormType extends FieldValues>({
   ...textInputProps
 }: UseControllerProps<FormType> & AditionalInput) {
   const { handleBlur, handleFocus, isFocused } = useInputFocus();
+
+  const onChangeText = (text: string, onChange: (...event: any[]) => void) => {
+    if (
+      keyboardType === "numeric" ||
+      keyboardType === "number-pad" ||
+      keyboardType === "decimal-pad"
+    ) {
+      const parsedValue = parseFloat(text);
+      onChange(text === "" ? text : isNaN(parsedValue) ? "" : parsedValue);
+    } else {
+      onChange(text);
+    }
+  };
 
   return (
     <Controller
