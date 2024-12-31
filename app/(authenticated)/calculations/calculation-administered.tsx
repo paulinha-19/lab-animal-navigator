@@ -172,7 +172,7 @@ export default function CalculationAdministeredScreen() {
               {results && <CalculationAdministeredResults results={results} />}
             </ModalBody>
             <ModalFooter>
-              <Button variant="solid" onPress={handleSubmit(onSubmit)}>
+              <Button variant="solid" onPress={handleCloseModal}>
                 <ButtonText>Fechar</ButtonText>
               </Button>
             </ModalFooter>
