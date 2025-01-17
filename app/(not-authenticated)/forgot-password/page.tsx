@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
-import Constants from "expo-constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ForgotPasswordType } from "@/types/auth-data";
@@ -19,8 +19,12 @@ import { ControlledInput } from "@/components";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, router } from "expo-router";
+import { useAuth } from "@/hooks/useAuth";
+import { AxiosError } from "axios";
 
 export default function ForgotPassword() {
+  const [loading, setLoading] = useState(false);
+  const { forgotPassword } = useAuth();
   const {
     control,
     handleSubmit,
@@ -33,6 +37,21 @@ export default function ForgotPassword() {
     },
     resolver: zodResolver(forgotPasswordSchema),
   });
+
+  const onSubmit = async (data: ForgotPasswordType) => {
+    try {
+      setLoading(true);
+      await forgotPassword(data);
+      setLoading(false);
+      router.navigate("/(not-authenticated)/insert-token/page");
+      reset();
+    } catch (error) {
+      console.log("error", error);
+      setLoading(false);
+      const err = error as AxiosError;
+      return err;
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -68,23 +87,29 @@ export default function ForgotPassword() {
                 backgroundColorInput="#7589A4"
               />
               <View style={styles.buttonSubmitContainer}>
-                <TouchableOpacity
-                  onPress={() =>
-                    router.navigate("/(not-authenticated)/insert-token/page")
-                  }
-                >
+                <TouchableOpacity onPress={handleSubmit(onSubmit)}>
                   <LinearGradient
                     colors={["#35629d", Colors.light.background]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     style={styles.buttonSubmit}
                   >
-                    <Text style={styles.textButtonSubmit}>Prosseguir</Text>
+                    <Text style={styles.textButtonSubmit}>
+                      {" "}
+                      {loading ? (
+                        <ActivityIndicator
+                          size="small"
+                          color={Colors.light.text}
+                        />
+                      ) : (
+                        "Prosseguir"
+                      )}
+                    </Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
               <View style={styles.containerCreateAccout}>
-                <Link href="/">
+                <Link href="/(not-authenticated)/signin/page">
                   <Text style={[styles.textCreateAccout]}>
                     Já tem uma conta? Faça o login
                   </Text>

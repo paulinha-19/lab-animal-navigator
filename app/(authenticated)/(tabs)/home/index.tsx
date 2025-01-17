@@ -23,10 +23,10 @@ export default function HomeScreen() {
             />
             <Text style={styles.textLogo}>LabAnimal</Text>
             <Text style={styles.textLogo}>Navigator</Text>
-            <Text style={{ ...styles.textTopics, marginTop: 80 }}>Tópicos</Text>
+            {/* <Text style={{ ...styles.textTopics, marginTop: 80 }}>Tópicos</Text> */}
             <Text
               onPress={() => router.navigate("/(authenticated)/topics/search-topics")}
-              style={{ ...styles.textTopics, marginTop: 10 }}
+              style={{ ...styles.textTopics, marginTop: 90 }}
             >
               Clique aqui e pesquise por um assunto
             </Text>
