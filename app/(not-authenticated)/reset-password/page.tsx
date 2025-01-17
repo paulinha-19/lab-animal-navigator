@@ -7,10 +7,10 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
-import Constants from "expo-constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ResetType } from "@/types/auth-data";
@@ -19,9 +19,15 @@ import { ControlledInput } from "@/components";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, router } from "expo-router";
+import { useAuth } from "@/hooks/useAuth";
+import { resetPasswordRequest } from "@/services/auth";
+import { AxiosError } from "axios";
 
 export default function ResetPassword() {
   const [showPassword, setShowPassword] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const { email } = useAuth();
+
   const {
     control,
     handleSubmit,
@@ -37,6 +43,20 @@ export default function ResetPassword() {
 
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
+  };
+
+  const onSubmit = async (data: ResetType) => {
+    try {
+      setLoading(true);
+      await resetPasswordRequest(data, email?.email);
+      setLoading(false);
+      router.replace("/(not-authenticated)/signin/page");
+      reset();
+    } catch (error) {
+      setLoading(false);
+      const err = error as AxiosError;
+      return err;
+    }
   };
 
   return (
@@ -55,7 +75,7 @@ export default function ResetPassword() {
               <ControlledInput
                 control={control}
                 name="newPassword"
-                placeholder="Insira uma senha"
+                placeholder="Insira a nova senha"
                 placeholderColor={Colors.dark.text}
                 label="Nova senha"
                 secureTextEntry={!showPassword}
@@ -82,14 +102,23 @@ export default function ResetPassword() {
                 backgroundColorInput="#7589A4"
               />
               <View style={styles.buttonSubmitContainer}>
-                <TouchableOpacity onPress={() => router.navigate("/")}>
+                <TouchableOpacity onPress={handleSubmit(onSubmit)}>
                   <LinearGradient
                     colors={["#35629d", Colors.light.background]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     style={styles.buttonSubmit}
                   >
-                    <Text style={styles.textButtonSubmit}>Finalizar</Text>
+                    <Text style={styles.textButtonSubmit}>
+                      {loading ? (
+                        <ActivityIndicator
+                          size="small"
+                          color={Colors.light.text}
+                        />
+                      ) : (
+                        "Finalizar"
+                      )}
+                    </Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
