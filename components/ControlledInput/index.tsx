@@ -62,8 +62,8 @@ export function ControlledInput<FormType extends FieldValues>({
       keyboardType === "number-pad" ||
       keyboardType === "decimal-pad"
     ) {
-      const parsedValue = parseFloat(text);
-      onChange(text === "" ? text : isNaN(parsedValue) ? "" : parsedValue);
+      const onlyNumbers = text.replace(/[^0-9]/g, ""); // Remove non-numeric characters
+      onChange(onlyNumbers);
     } else {
       onChange(text);
     }
