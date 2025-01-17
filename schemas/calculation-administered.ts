@@ -5,27 +5,13 @@ const calculationAdministeredSchema = z.object({
   selectLineage: z.string().nonempty("Campo obrigatório"),
   selectPhaseLife: z.string().nonempty("Campo obrigatório"),
   numberAnimals: z
-    .union([
-      z.string().refine((val) => val === "", "Campo obrigatório"),
-      z.number().min(1, "O valor deve ser maior que 0"),
-    ])
-    .transform((val) =>
-      typeof val === "string" && val !== "" ? parseFloat(val) : val
-    )
-    .refine((val) => typeof val === "number" && !isNaN(val), {
-      message: "O valor deve ser um número válido",
-    }),
+    .string()
+    .nonempty("Campo obrigatório")
+    .regex(/^[1-9]\d*$/, "O valor não pode começar com 0"),
   amountFeed: z
-    .union([
-      z.string().refine((val) => val === "", "Campo obrigatório"),
-      z.number().min(1, "O valor deve ser maior que 0"),
-    ])
-    .transform((val) =>
-      typeof val === "string" && val !== "" ? parseFloat(val) : val
-    )
-    .refine((val) => typeof val === "number" && !isNaN(val), {
-      message: "O valor deve ser um número válido",
-    }),
+    .string()
+    .nonempty("Campo obrigatório")
+    .regex(/^[1-9]\d*$/, "O valor não pode começar com 0"),
 });
 
 export default calculationAdministeredSchema;
