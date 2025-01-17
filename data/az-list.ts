@@ -1,103 +1,73 @@
 export const DATA = [
   {
-    key: "A",
-    items: ["Apple", "Avocado", "Apricot", "Artichoke", "Asparagus"],
-  },
-  {
     key: "B",
     items: [
-      "Banana",
-      "Blueberry",
-      "Broccoli",
-      "Brussels Sprouts",
-      "Blackberry",
+      {
+        label: "Biologia e manejo",
+        urls: [
+          {
+            name: "",
+            url: "https://www.gov.br/mcti/pt-br/composicao/conselhos/concea/arquivos/arquivo/publicacoes-do-concea/guia_concea_1ed_animais-_ensino_ou_pesquisa_2023.pdf",
+          },
+        ],
+      },
     ],
   },
   {
-    key: "C",
-    items: ["Carrot", "Cucumber", "Cherry", "Cauliflower", "Cabbage"],
-  },
-  { key: "D", items: ["Dragonfruit", "Dates", "Durian", "Dill", "Dandelion"] },
-  {
-    key: "E",
-    items: ["Eggplant", "Elderberry", "Endive", "Escarole", "Edamame"],
-  },
-  { key: "F", items: ["Fig", "Fennel", "Fenugreek", "Feijoa", "French Beans"] },
-  { key: "G", items: ["Grapes", "Ginger", "Gooseberry", "Guava", "Garlic"] },
-  {
-    key: "H",
-    items: ["Honeydew", "Horseradish", "Huckleberry", "Hibiscus", "Hazelnut"],
-  },
-  {
-    key: "I",
+    key: "L",
     items: [
-      "Iceberg Lettuce",
-      "Indian Fig",
-      "Ice Plant",
-      "Ilama",
-      "Indian Gooseberry",
+      {
+        label: "Legislação americana",
+        urls: [
+          { name: "", url: "https://oacu.oir.nih.gov/regulations-standards" },
+        ],
+      },
+      {
+        label: "Legislação brasileira",
+        urls: [
+          {
+            name: "",
+            url: "https://www.gov.br/mcti/pt-br/composicao/conselhos/concea/paginas/publicacoes-legislacao-e-guia/legislacao-do-concea",
+          },
+        ],
+      },
+      {
+        label: "Legislaçãlego diretiva europeia",
+        urls: [
+          {
+            name: "",
+            url: "https://eur-lex.europa.eu/legal-content/PT/TXT/HTML/?uri=CELEX:32010L0063",
+          },
+        ],
+      },
     ],
   },
   {
-    key: "J",
+    key: "P",
     items: [
-      "Jackfruit",
-      "Jalapeño",
-      "Jujube",
-      "Juniper Berry",
-      "Jerusalem Artichoke",
+      {
+        label: "Planejamento experimental",
+        urls: [
+          {
+            name: "Arrive",
+            url: "https://arriveguidelines.org/arrive-guidelines",
+          },
+          {
+            name: "Norecopa",
+            url: "https://norecopa.no/prepare/prepare-checklist/",
+          },
+        ],
+      },
+      {
+        label: "Ponto final humanitário",
+        urls: [
+          {
+            name: "Atena",
+            url: "https://atenaeditora.com.br/catalogo/ebook/guia-de-finalizacao-humanitaria-aplicada-a-roedores-utilizados-em-pesquisas",
+          },
+          { name: "AnimalPain", url: "https://animalpain.org/en/home-en/" },
+        ],
+      },
     ],
   },
-  { key: "K", items: ["Kiwi", "Kale", "Kumquat", "Kohlrabi", "Kelp"] },
-  { key: "L", items: ["Lemon", "Lime", "Lychee", "Lettuce", "Leek"] },
-  { key: "M", items: ["Mango", "Melon", "Mulberry", "Mandarin", "Mushroom"] },
-  {
-    key: "N",
-    items: ["Nectarine", "Nori", "Napa Cabbage", "Nutmeg", "Nigella"],
-  },
-  { key: "O", items: ["Orange", "Olive", "Okra", "Oregano", "Onion"] },
-  { key: "P", items: ["Peach", "Pear", "Pineapple", "Papaya", "Pea"] },
-  {
-    key: "Q",
-    items: [
-      "Quince",
-      "Quinoa",
-      "Queen Anne's Lace",
-      "Quaker Grass",
-      "Quillaja",
-    ],
-  },
-  { key: "R", items: ["Raspberry", "Radish", "Raisin", "Rosemary", "Rhubarb"] },
-  {
-    key: "S",
-    items: ["Strawberry", "Spinach", "Starfruit", "Squash", "Sweet Potato"],
-  },
-  { key: "T", items: ["Tomato", "Tangerine", "Turnip", "Tamarind", "Thyme"] },
-  {
-    key: "U",
-    items: ["Ugli Fruit", "Ube", "Umbrella Fruit", "Ulluco", "Urfa Pepper"],
-  },
-  {
-    key: "V",
-    items: [
-      "Vanilla",
-      "Valencia Orange",
-      "Velvet Apple",
-      "Vine Peach",
-      "Vidalia Onion",
-    ],
-  },
-  {
-    key: "W",
-    items: ["Watermelon", "Walnut", "Winter Melon", "Wasabi", "Wheat"],
-  },
-  {
-    key: "X",
-    items: ["Xigua", "Ximenia", "Xanthan Gum", "Xylocarp", "Xiang Jiao"],
-  },
-  {
-    key: "Y",
-    items: ["Yam", "Yuzu", "Yellow Pepper", "Yellow Squash", "Youngberry"],
-  },
-  { key: "Z", items: ["Zucchini", "Zest", "Ziziphus", "Zuccotto", "Zapote"] },
 ];
