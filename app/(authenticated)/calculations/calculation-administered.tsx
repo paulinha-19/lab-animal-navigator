@@ -93,7 +93,7 @@ export default function CalculationAdministeredScreen() {
             options={SPECIES}
             sizeError={14}
             colorValue="#fff"
-            placeholder="Escolha uma opção"
+            placeholder="Escolha uma espécie"
           />
           <View style={styles.spaceBettwenInput}>
             <ControlledSelect
@@ -103,7 +103,7 @@ export default function CalculationAdministeredScreen() {
               options={LINEAGE}
               sizeError={14}
               colorValue="#fff"
-              placeholder="Escolha uma opção"
+              placeholder="Escolha uma linhagem"
             />
           </View>
           <View style={styles.spaceBettwenInput}>
@@ -114,7 +114,7 @@ export default function CalculationAdministeredScreen() {
               options={PHASELIFE}
               sizeError={14}
               colorValue="#fff"
-              placeholder="Escolha uma opção"
+              placeholder="Escolha uma fase da vida"
             />
           </View>
           <ControlledInput
@@ -137,7 +137,7 @@ export default function CalculationAdministeredScreen() {
             name="amountFeed"
             placeholder="Insira um valor"
             placeholderColor="#ddd"
-            label="Quantidade de ração/animal (g)"
+            label="Quantidade de ração"
             autoCapitalize="none"
             keyboardType="number-pad"
             errorMessage={errors?.amountFeed?.message}
