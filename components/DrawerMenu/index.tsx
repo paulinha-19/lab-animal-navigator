@@ -77,6 +77,15 @@ export const DrawerMenu = () => {
           <DrawerBody contentContainerClassName="gap-8">
             <Pressable
               style={styles.bodyDrawerContainer}
+              onPress={() =>
+                navigateTo("/(authenticated)/home", setShowDrawer, router)
+              }
+            >
+              <AntDesign name="home" size={24} color={Colors.light.text} />
+              <Text style={styles.textDrawer}>Início</Text>
+            </Pressable>
+            <Pressable
+              style={styles.bodyDrawerContainer}
               onPress={openBiologyUrl}
             >
               <AntDesign name="book" size={24} color={Colors.light.text} />
