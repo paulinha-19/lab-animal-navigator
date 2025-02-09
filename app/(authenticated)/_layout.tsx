@@ -6,17 +6,35 @@ export default function AuthenticatedLayout() {
   return (
     <GluestackUIProvider mode="light">
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
-          name="topics/search-topics"
+          name="home/index"
           options={{
-            title: "Tópicos",
+            title: "",
+            headerTitleStyle: { fontSize: 16 },
+            headerStyle: { backgroundColor: "#153d72" },
+            headerTintColor: "#fff",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="bot-lana/index"
+          options={{
+            title: "LANA",
             headerTitleStyle: { fontSize: 16 },
             headerStyle: { backgroundColor: "#153d72" },
             headerTintColor: "#fff",
           }}
         />
         <Stack.Screen
+          name="topics/search-topics"
+          options={{
+            title: "Assuntos",
+            headerTitleStyle: { fontSize: 16 },
+            headerStyle: { backgroundColor: "#153d72" },
+            headerTintColor: "#fff",
+          }}
+        />
+        {/* <Stack.Screen
           name="topics/az-list"
           options={{
             title: "A-Z",
@@ -24,7 +42,7 @@ export default function AuthenticatedLayout() {
             headerStyle: { backgroundColor: "#153d72" },
             headerTintColor: "#fff",
           }}
-        />
+        /> */}
         <Stack.Screen
           name="calculations/calculations"
           options={{
