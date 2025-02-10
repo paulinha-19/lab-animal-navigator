@@ -1,10 +1,22 @@
 import React from "react";
-import { View, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, Alert } from "react-native";
 import { Href, router } from "expo-router";
 import Feather from "@expo/vector-icons/Feather";
 import { Colors } from "@/constants/Colors";
 import { calculationsData } from "@/data/calculations";
 export default function CalculationRootScreen() {
+
+  const handlePress = (item: { href: string; text: string }) => {
+    if (item.text === "Cálculo de doses") {
+      Alert.alert(
+        "Em desenvolvimento",
+        "Essa funcionalidade estará disponível em breve!"
+      );
+    } else {
+      router.push(item.href as Href);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View
@@ -19,7 +31,7 @@ export default function CalculationRootScreen() {
               <View style={styles.resultItem}>
                 <Text
                   style={styles.resultText}
-                  onPress={() => router.push(item.href as Href)}
+                  onPress={() => handlePress(item)}
                 >
                   {item.text}
                 </Text>
@@ -27,7 +39,7 @@ export default function CalculationRootScreen() {
                   name="chevron-right"
                   size={20}
                   color="#fff"
-                  onPress={() => router.push(item.href as Href)}
+                  onPress={() => handlePress(item)}
                 />
               </View>
             </View>

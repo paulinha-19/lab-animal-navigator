@@ -1,28 +1,41 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { Divider } from "@/components";
+import { handlePress } from "@/utils/handlePress";
 
-interface SearchResultsProps {
-  filteredData: string[];
+interface SearchResultItem {
+  label: string;
+  urls: { name: string; url: string }[];
 }
 
+interface SearchResultsProps {
+  filteredData: SearchResultItem[];
+}
 export const SearchResults = ({ filteredData }: SearchResultsProps) => {
   return (
     <View>
       {filteredData.length > 0 ? (
         <>
           <Text style={styles.resultsText}>
-            {`${filteredData.length} resultados encontrados`}
+            {`${filteredData.length} resultado(s) encontrado(s)`}
           </Text>
           {filteredData.map((item, index) => (
-            <View key={index}>
+            <TouchableOpacity
+              key={index}
+              onPress={() => handlePress(item.label, item.urls)}
+            >
               <View style={styles.resultItem}>
-                <Text style={styles.resultText}>{item}</Text>
+                <Text style={styles.resultText}>{item.label}</Text>
                 <Feather name="chevron-right" size={20} color="#fff" />
               </View>
               <Divider />
-            </View>
+            </TouchableOpacity>
           ))}
         </>
       ) : (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, Alert } from "react-native";
 import { Box } from "@/components/ui/box";
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -17,9 +17,34 @@ import { Button, ButtonText } from "@/components/ui/button";
 import { Colors } from "@/constants/Colors";
 import { router } from "expo-router";
 import { navigateTo } from "@/utils/drawer-menu";
+import { useAuth } from "@/hooks/useAuth";
+import { AxiosError } from "axios";
+import * as Linking from "expo-linking";
 
 export const DrawerMenu = () => {
   const [showDrawer, setShowDrawer] = useState(false);
+  const { signOut, setLoading } = useAuth();
+
+  const onSubmit = async () => {
+    try {
+      setLoading(true);
+      await signOut();
+      setLoading(false);
+      router.replace("/(not-authenticated)/signin/page");
+    } catch (error) {
+      setLoading(false);
+      const err = error as AxiosError;
+      return err;
+    }
+  };
+
+  const openBiologyUrl = () => {
+    Linking.openURL(
+      "https://www.gov.br/mcti/pt-br/composicao/conselhos/concea/arquivos/arquivo/publicacoes-do-concea/guia_concea_1ed_animais-_ensino_ou_pesquisa_2023.pdf"
+    ).catch((err) =>  Alert.alert("Erro", "Não foi possível abrir a URL"));
+    setShowDrawer(false);
+  };
+
   return (
     <Box>
       <LinearGradient
@@ -50,15 +75,32 @@ export const DrawerMenu = () => {
           style={{ borderColor: "transparent" }}
         >
           <DrawerBody contentContainerClassName="gap-8">
-            <Pressable style={styles.bodyDrawerContainer}>
+            <Pressable
+              style={styles.bodyDrawerContainer}
+              onPress={() =>
+                navigateTo("/(authenticated)/home", setShowDrawer, router)
+              }
+            >
+              <AntDesign name="home" size={24} color={Colors.light.text} />
+              <Text style={styles.textDrawer}>Início</Text>
+            </Pressable>
+            <Pressable
+              style={styles.bodyDrawerContainer}
+              onPress={openBiologyUrl}
+            >
               <AntDesign name="book" size={24} color={Colors.light.text} />
               <Text style={styles.textDrawer}>Biologia e manejo</Text>
             </Pressable>
-            <Pressable style={styles.bodyDrawerContainer}>
-              <AntDesign name="book" size={24} color={Colors.light.text} />
-              <Text style={styles.textDrawer}>Experimentação</Text>
-            </Pressable>
-            <Pressable style={styles.bodyDrawerContainer}>
+            <Pressable
+              style={styles.bodyDrawerContainer}
+              onPress={() =>
+                navigateTo(
+                  "/(authenticated)/topics/search-topics",
+                  setShowDrawer,
+                  router
+                )
+              }
+            >
               <AntDesign name="book" size={24} color={Colors.light.text} />
               <Text style={styles.textDrawer}>Legislação</Text>
             </Pressable>
@@ -85,15 +127,12 @@ export const DrawerMenu = () => {
             </Pressable>
           </DrawerBody>
           <DrawerFooter>
-            <Button className="w-full gap-2" action="secondary">
-              <ButtonText
-                onPress={() => {
-                  setShowDrawer(false);
-                  router.replace("/(not-authenticated)/signup/page");
-                }}
-              >
-                Sair do aplicativo
-              </ButtonText>
+            <Button
+              className="w-full gap-2"
+              action="secondary"
+              onPress={onSubmit}
+            >
+              <ButtonText>Sair do aplicativo</ButtonText>
               <SimpleLineIcons name="logout" size={24} color="black" />
             </Button>
           </DrawerFooter>

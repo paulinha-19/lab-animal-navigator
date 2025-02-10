@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
-import { router, Link } from "expo-router";
+import { Link, router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
-import Constants from "expo-constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PasswordEmail } from "@/types/auth-data";
@@ -20,9 +20,13 @@ import { ControlledInput } from "@/components";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useAuth } from "@/hooks/useAuth";
+import { AxiosError } from "axios";
 
-export default function SignUp() {
+export default function SignUpScreen() {
   const [showPassword, setShowPassword] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const { onRegister } = useAuth();
 
   const {
     control,
@@ -40,6 +44,20 @@ export default function SignUp() {
 
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
+  };
+
+  const onSubmit = async (data: PasswordEmail) => {
+    try {
+      setLoading(true);
+      await onRegister(data);
+      setLoading(false);
+      router.replace("/(not-authenticated)/signin/page");
+      reset();
+    } catch (error) {
+      const err = error as AxiosError;
+      setLoading(false);
+      return err;
+    }
   };
 
   return (
@@ -106,19 +124,28 @@ export default function SignUp() {
                 />
               </View>
               <View style={styles.buttonSubmitContainer}>
-                <TouchableOpacity onPress={() => router.back()}>
+                <TouchableOpacity onPress={handleSubmit(onSubmit)}>
                   <LinearGradient
                     colors={["#35629d", Colors.light.background]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     style={styles.buttonSubmit}
                   >
-                    <Text style={styles.textButtonSubmit}>Cadastrar</Text>
+                    <Text style={styles.textButtonSubmit}>
+                      {loading ? (
+                        <ActivityIndicator
+                          size="small"
+                          color={Colors.light.text}
+                        />
+                      ) : (
+                        "Cadastrar"
+                      )}
+                    </Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
               <View style={styles.containerCreateAccout}>
-                <Link href="/">
+                <Link href="/(not-authenticated)/signin/page">
                   <Text style={[styles.textCreateAccout]}>
                     Já tem uma conta? Faça o login
                   </Text>

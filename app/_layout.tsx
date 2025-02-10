@@ -1,30 +1,36 @@
 import "@/global.css";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
 import "react-native-reanimated";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { AuthProvider } from "@/context/AuthContext";
+import { useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { router } from "expo-router";
+export default function NotAuthenticatedLayout() {
+  return (
+    <AuthProvider>
+      <RootLayout />
+    </AuthProvider>
+  );
+}
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  });
+const RootLayout = () => {
+  const {
+    user,
+    getToken,
+    isAuthenticated,
+    setIsAuthenticated,
+    isAuthenticatedUser,
+  } = useAuth();
 
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
+    if (isAuthenticatedUser) {
+      setIsAuthenticated(true);
+      router.replace("/(authenticated)/home");
+    } else {
+      router.replace("/(not-authenticated)/signin/page");
     }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
+  }, [isAuthenticatedUser]);
 
   return (
     <GluestackUIProvider mode="light">
@@ -34,6 +40,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="index" />
+        <Stack.Screen name="(not-authenticated)/signin/page" />
         <Stack.Screen name="(not-authenticated)/signup/page" />
         <Stack.Screen name="(not-authenticated)/forgot-password/page" />
         <Stack.Screen name="(not-authenticated)/insert-token/page" />
@@ -41,4 +48,4 @@ export default function RootLayout() {
       </Stack>
     </GluestackUIProvider>
   );
-}
+};

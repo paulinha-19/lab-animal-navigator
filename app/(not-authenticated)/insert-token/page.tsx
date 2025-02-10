@@ -7,32 +7,50 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
+  ActivityIndicator
 } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
-import Constants from "expo-constants";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TokenType } from "@/types/auth-data";
 import tokenResetPasswordSchema from "@/schemas/token-reset-password";
+import { TokenResetPasswordType } from "@/schemas/token-reset-password";
 import { ControlledInput } from "@/components";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, router } from "expo-router";
+import { tokenPasswordRequest } from "@/services/auth";
+import { AxiosError } from "axios";
 
 export default function InsertToken() {
+  const [loading, setLoading] = useState(false);
+
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<TokenType>({
+  } = useForm<TokenResetPasswordType>({
     mode: "onChange",
     defaultValues: {
       token: "",
     },
     resolver: zodResolver(tokenResetPasswordSchema),
   });
+
+  const onSubmit = async (data: TokenResetPasswordType) => {
+    try {
+      setLoading(true);
+      await tokenPasswordRequest(data);
+      setLoading(false);
+      router.replace("/(not-authenticated)/reset-password/page");
+      reset();
+    } catch (error) {
+      setLoading(false);
+      const err = error as AxiosError;
+      return err;
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -68,23 +86,28 @@ export default function InsertToken() {
                 backgroundColorInput="#7589A4"
               />
               <View style={styles.buttonSubmitContainer}>
-                <TouchableOpacity
-                  onPress={() =>
-                    router.navigate("/(not-authenticated)/reset-password/page")
-                  }
-                >
+                <TouchableOpacity onPress={handleSubmit(onSubmit)}>
                   <LinearGradient
                     colors={["#35629d", Colors.light.background]}
                     start={{ x: 0, y: 0 }}
                     end={{ x: 0, y: 1 }}
                     style={styles.buttonSubmit}
                   >
-                    <Text style={styles.textButtonSubmit}>Prosseguir</Text>
+                    <Text style={styles.textButtonSubmit}>
+                      {loading ? (
+                        <ActivityIndicator
+                          size="small"
+                          color={Colors.light.text}
+                        />
+                      ) : (
+                        "Prosseguir"
+                      )}
+                    </Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
               <View style={styles.containerCreateAccout}>
-                <Link href="/">
+                <Link href="/(not-authenticated)/signin/page">
                   <Text style={[styles.textCreateAccout]}>
                     Já tem uma conta? Faça o login
                   </Text>

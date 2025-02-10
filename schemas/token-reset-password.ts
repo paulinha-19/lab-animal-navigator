@@ -3,8 +3,10 @@ import { z } from "zod";
 const tokenResetPasswordSchema = z.object({
   token: z
     .string()
-    .min(6, "O código deve ter 6 números")
-    .max(6, "O código deve ter 6 números"),
+    .length(6, "O valor deve ter 6 dígitos")
+    .regex(/^\d+$/, "O valor deve ser um número válido"), // Garante apenas números
 });
 
 export default tokenResetPasswordSchema;
+
+export type TokenResetPasswordType = z.infer<typeof tokenResetPasswordSchema>;

@@ -5,52 +5,53 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  SafeAreaView,
-  ScrollView,
+  Platform,
   ActivityIndicator,
 } from "react-native";
+import { Link, router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ResetType } from "@/types/auth-data";
-import resetPasswordSchema from "@/schemas/reset-password";
+import { PasswordEmail } from "@/types/auth-data";
+import emailPasswordSchema from "@/schemas/email-password";
 import { ControlledInput } from "@/components";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, router } from "expo-router";
-import { useAuth } from "@/hooks/useAuth";
-import { resetPasswordRequest } from "@/services/auth";
+import { SafeAreaView, ScrollView } from "react-native";
 import { AxiosError } from "axios";
+import { useAuth } from "@/hooks/useAuth";
 
-export default function ResetPassword() {
+export default function Login() {
   const [showPassword, setShowPassword] = useState(true);
   const [loading, setLoading] = useState(false);
-  const { email } = useAuth();
+  const { signIn } = useAuth();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ResetType>({
+  } = useForm<PasswordEmail>({
     mode: "onChange",
     defaultValues: {
-      newPassword: "",
+      email: "",
+      password: "",
     },
-    resolver: zodResolver(resetPasswordSchema),
+    resolver: zodResolver(emailPasswordSchema),
   });
 
   const toggleShowPassword = () => {
     setShowPassword((prevState) => !prevState);
   };
 
-  const onSubmit = async (data: ResetType) => {
+  const onSubmit = async (data: PasswordEmail) => {
     try {
       setLoading(true);
-      await resetPasswordRequest(data, email?.email);
+      await signIn(data);
+      router.replace("/(authenticated)/home");
       setLoading(false);
-      router.replace("/(not-authenticated)/signin/page");
       reset();
     } catch (error) {
       setLoading(false);
@@ -69,38 +70,66 @@ export default function ResetPassword() {
               source={require("../../../assets/images/logo-lab-animal.png")}
             />
           </Box>
-          <Text style={styles.textHeader}>Recuperar senha</Text>
+          <Text style={styles.textHeader}>Login</Text>
           <Box style={styles.containerForm}>
             <View style={styles.contaienerInputs}>
               <ControlledInput
                 control={control}
-                name="newPassword"
-                placeholder="Insira a nova senha"
+                name="email"
+                placeholder="Insira seu email"
                 placeholderColor={Colors.dark.text}
-                label="Nova senha"
-                secureTextEntry={!showPassword}
+                label="Email"
                 autoCapitalize="none"
+                keyboardType="email-address"
                 leftIcon={
-                  <Ionicons
-                    name="lock-closed"
+                  <MaterialIcons
+                    name="alternate-email"
                     size={24}
                     color={Colors.light.background}
                   />
                 }
-                rightIcon={
-                  <Ionicons
-                    name={showPassword ? "eye" : "eye-off"}
-                    size={24}
-                    color={Colors.light.background}
-                    dd
-                    onPress={toggleShowPassword}
-                  />
-                }
-                errorMessage={errors?.newPassword?.message}
+                errorMessage={errors?.email?.message}
                 borderColorInputFocus={Colors.light.text}
                 borderColorInputBlur="#7589A4"
                 backgroundColorInput="#7589A4"
               />
+              <View>
+                <ControlledInput
+                  control={control}
+                  name="password"
+                  placeholder="Insira sua senha"
+                  placeholderColor="#ddd"
+                  label="Senha"
+                  secureTextEntry={!showPassword}
+                  autoCapitalize="none"
+                  leftIcon={
+                    <Ionicons
+                      name="lock-closed-outline"
+                      size={24}
+                      color={Colors.light.background}
+                    />
+                  }
+                  rightIcon={
+                    <Ionicons
+                      name={showPassword ? "eye-outline" : "eye-off-outline"}
+                      size={24}
+                      color={Colors.light.background}
+                      onPress={toggleShowPassword}
+                    />
+                  }
+                  errorMessage={errors?.password?.message}
+                  borderColorInputFocus={Colors.light.text}
+                  borderColorInputBlur="#7589A4"
+                  backgroundColorInput="#7589A4"
+                />
+              </View>
+              <View style={styles.containerForgotPassword}>
+                <Link href="/(not-authenticated)/forgot-password/page">
+                  <Text style={styles.forgotPasswordLink}>
+                    Esqueci minha senha
+                  </Text>
+                </Link>
+              </View>
               <View style={styles.buttonSubmitContainer}>
                 <TouchableOpacity onPress={handleSubmit(onSubmit)}>
                   <LinearGradient
@@ -116,16 +145,16 @@ export default function ResetPassword() {
                           color={Colors.light.text}
                         />
                       ) : (
-                        "Finalizar"
+                        "Entrar"
                       )}
                     </Text>
                   </LinearGradient>
                 </TouchableOpacity>
               </View>
               <View style={styles.containerCreateAccout}>
-                <Link href="/">
+                <Link href="/(not-authenticated)/signup/page">
                   <Text style={[styles.textCreateAccout]}>
-                    Já tem uma conta? Faça o login
+                    Ainda não tem uma conta? Cadastre-se
                   </Text>
                 </Link>
               </View>
@@ -140,6 +169,7 @@ export default function ResetPassword() {
 const styles = StyleSheet.create({
   containter: {
     flex: 1,
+    position: "relative",
   },
   logoHome: {
     alignItems: "center",
@@ -149,7 +179,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   textSize: {
-    fontSize: 30,
+    fontSize: 40,
   },
   containerForm: {
     width: "100%",
@@ -159,9 +189,16 @@ const styles = StyleSheet.create({
     width: "85%",
     height: "100%",
   },
+  containerForgotPassword: {
+    marginTop: Platform.OS === "ios" ? 5 : 1,
+  },
+  forgotPasswordLink: {
+    color: Colors.light.text,
+    fontSize: 12,
+    textAlign: "right",
+  },
   buttonSubmitContainer: {
     alignSelf: "center", // Centers the button horizontally
-    marginTop: 30,
   },
   buttonSubmit: {
     padding: 15,
@@ -169,6 +206,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center", // Centers the content within the View
     justifyContent: "center", // Aligns the content vertically
+    marginTop: 15,
   },
   textButtonSubmit: {
     color: "white",
@@ -181,7 +219,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 5,
   },
-  textCreateAccout: { fontSize: 14, color: Colors.light.text },
+  textCreateAccout: { fontSize: 12, color: Colors.light.text },
   textHeader: {
     color: Colors.light.text,
     fontSize: 30,

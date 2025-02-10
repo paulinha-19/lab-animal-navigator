@@ -14,3 +14,8 @@ export type ResetType = {
 export type ForgotPasswordType = {
   email: string;
 };
+
+export type UserDataType = {
+  token: string;
+  message: string;
+};
