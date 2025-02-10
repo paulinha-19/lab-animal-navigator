@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, Pressable } from "react-native";
+import { StyleSheet, Text, Pressable, Alert } from "react-native";
 import { Box } from "@/components/ui/box";
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -19,7 +19,7 @@ import { router } from "expo-router";
 import { navigateTo } from "@/utils/drawer-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { AxiosError } from "axios";
-import * as WebBrowser from "expo-web-browser";
+import * as Linking from "expo-linking";
 
 export const DrawerMenu = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -39,9 +39,9 @@ export const DrawerMenu = () => {
   };
 
   const openBiologyUrl = () => {
-    WebBrowser.openBrowserAsync(
+    Linking.openURL(
       "https://www.gov.br/mcti/pt-br/composicao/conselhos/concea/arquivos/arquivo/publicacoes-do-concea/guia_concea_1ed_animais-_ensino_ou_pesquisa_2023.pdf"
-    );
+    ).catch((err) =>  Alert.alert("Erro", "Não foi possível abrir a URL"));
     setShowDrawer(false);
   };
 
@@ -77,6 +77,15 @@ export const DrawerMenu = () => {
           <DrawerBody contentContainerClassName="gap-8">
             <Pressable
               style={styles.bodyDrawerContainer}
+              onPress={() =>
+                navigateTo("/(authenticated)/home", setShowDrawer, router)
+              }
+            >
+              <AntDesign name="home" size={24} color={Colors.light.text} />
+              <Text style={styles.textDrawer}>Início</Text>
+            </Pressable>
+            <Pressable
+              style={styles.bodyDrawerContainer}
               onPress={openBiologyUrl}
             >
               <AntDesign name="book" size={24} color={Colors.light.text} />
@@ -86,7 +95,7 @@ export const DrawerMenu = () => {
               style={styles.bodyDrawerContainer}
               onPress={() =>
                 navigateTo(
-                  "/(authenticated)/topics/az-list",
+                  "/(authenticated)/topics/search-topics",
                   setShowDrawer,
                   router
                 )

@@ -50,7 +50,7 @@ export default function Login() {
     try {
       setLoading(true);
       await signIn(data);
-      router.replace("/(authenticated)/(tabs)/home");
+      router.replace("/(authenticated)/home");
       setLoading(false);
       reset();
     } catch (error) {

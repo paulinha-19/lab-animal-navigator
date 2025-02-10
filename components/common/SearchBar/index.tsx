@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: "white",
     paddingHorizontal: 10,
-    width: "88%", //flex: 1
+    width: "100%", //flex: 1
   },
   input: {
     flex: 1,

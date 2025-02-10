@@ -26,7 +26,7 @@ const RootLayout = () => {
   useEffect(() => {
     if (isAuthenticatedUser) {
       setIsAuthenticated(true);
-      router.replace("/(authenticated)/(tabs)/home");
+      router.replace("/(authenticated)/home");
     } else {
       router.replace("/(not-authenticated)/signin/page");
     }
