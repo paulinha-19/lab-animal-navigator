@@ -3,12 +3,11 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
-  Alert,
-  Linking,
+  TouchableOpacity
 } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { Divider } from "@/components";
+import { handlePress } from "@/utils/handlePress";
 
 interface SearchResultItem {
   label: string;
@@ -19,36 +18,12 @@ interface SearchResultsProps {
   filteredData: SearchResultItem[];
 }
 export const SearchResults = ({ filteredData }: SearchResultsProps) => {
-  const handlePress = (
-    label: string,
-    urls: { name: string; url: string }[]
-  ) => {
-    if (urls.length === 1) {
-      Linking.openURL(urls[0].url).catch(() =>
-        Alert.alert("Erro", "Não foi possível abrir a URL.")
-      );
-    } else {
-      Alert.alert(
-        label,
-        "Escolha uma das opções:",
-        urls.map((item) => ({
-          text: item.name,
-          onPress: () =>
-            Linking.openURL(item.url).catch(() =>
-              Alert.alert("Erro", "Não foi possível abrir a URL.")
-            ),
-        })),
-        { cancelable: true }
-      );
-    }
-  };
-
   return (
     <View>
       {filteredData.length > 0 ? (
         <>
           <Text style={styles.resultsText}>
-            {`${filteredData.length} resultados encontrados`}
+            {`${filteredData.length} resultado(s) encontrado(s)`}
           </Text>
           {filteredData.map((item, index) => (
             <TouchableOpacity
