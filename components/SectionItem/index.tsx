@@ -4,11 +4,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Linking,
-  Alert,
 } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { Box } from "../ui/box";
+import { handlePress } from "@/utils/handlePress";
 
 interface SectionItemProps {
   title: string;
@@ -16,29 +15,6 @@ interface SectionItemProps {
 }
 
 export const SectionItem = memo(({ title, items }: SectionItemProps) => {
-  const handlePress = (
-    label: string,
-    urls: { name: string; url: string }[]
-  ) => {
-    if (urls.length === 1) {
-      Linking.openURL(urls[0].url).catch(() =>
-        Alert.alert("Erro", "Não foi possível abrir a URL")
-      );
-    } else {
-      Alert.alert(
-        label,
-        "Escolha uma das opções:",
-        urls.map((item) => ({
-          text: item.name,
-          onPress: () =>
-            Linking.openURL(item.url).catch(() =>
-              Alert.alert("Erro", "Não foi possível abrir a URL.")
-            ),
-        })),
-        { cancelable: true }
-      );
-    }
-  };
 
   return (
     <View style={styles.section}>
