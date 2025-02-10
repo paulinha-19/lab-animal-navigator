@@ -22,6 +22,3 @@ expo-env.d.ts
 #environment variables
 .env
 constants/auth.ts
-
-#eas
-eas.json
