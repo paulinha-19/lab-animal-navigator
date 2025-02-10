@@ -8,6 +8,7 @@ import {
   Alert,
 } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
+import { Box } from "../ui/box";
 
 interface SectionItemProps {
   title: string;
@@ -41,7 +42,9 @@ export const SectionItem = memo(({ title, items }: SectionItemProps) => {
 
   return (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{title}</Text>
+      <Box style={styles.containerSectionTitle}>
+        <Text style={styles.sectionTitle}>{title}</Text>
+      </Box>
       {items.map((item, index) => (
         <TouchableOpacity
           key={index}
@@ -61,22 +64,21 @@ export const SectionItem = memo(({ title, items }: SectionItemProps) => {
 const styles = StyleSheet.create({
   section: {
     paddingVertical: 10,
-    paddingStart: 5,
-    paddingEnd: 5,
+  },
+  containerSectionTitle: {
+    backgroundColor: "#fff"
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#b9b7b7",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    paddingBottom: 10,
+    color: "#737373",
     paddingStart: 5,
   },
   itemText: {
     fontSize: 16,
     color: "#ffffff",
     paddingVertical: 10,
+    paddingStart: 2,  
   },
   resultItem: {
     flexDirection: "row",
