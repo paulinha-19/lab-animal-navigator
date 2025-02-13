@@ -1,3 +1,6 @@
+# Sobre
+O app LabAnimalNavigator irá facilitar a consulta à informações diversas fontes de textos sobre Ciências em Animais de Laboratório, a partir do acesso aos bancos de dados e literaturas disponíveis gratuitamente, utilizando um chatbot (LANA) a qual auxiliará uma pesquisa específica sobre determinado assunto de interesse. O app também pretende disponibilizar ferramentas de assistência a cálculos rápidos de doses de medicações e anestésicos e quantitativo de ração a ser disponibilizada em uma colônia.
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
