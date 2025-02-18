@@ -43,7 +43,7 @@ export default function BotLanaScreen() {
       <WebView
         style={styles.container}
         source={{
-          uri: "https://bot.writesonic.com/share/bot/3037b5fb-ad42-40b9-8d05-a9cc46fb6ff9",
+          uri: "https://bot.writesonic.com/share/bot/fc311317-e6f9-43b7-9fc6-6333b78ae3a6",
         }}
         injectedJavaScript={injectedJavaScript}
         onLoadEnd={handleLoadEnd}
