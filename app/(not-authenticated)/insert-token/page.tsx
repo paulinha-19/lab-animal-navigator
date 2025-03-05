@@ -7,20 +7,20 @@ import {
   TouchableOpacity,
   SafeAreaView,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
+import { Link, router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import tokenResetPasswordSchema from "@/schemas/token-reset-password";
-import { TokenResetPasswordType } from "@/schemas/token-reset-password";
+import { tokenResetPasswordSchema } from "@/schemas/index";
+import { TokenResetPasswordType } from "../../../types/index";
 import { ControlledInput } from "@/components";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { LinearGradient } from "expo-linear-gradient";
-import { Link, router } from "expo-router";
 import { tokenPasswordRequest } from "@/services/auth";
-import { AxiosError } from "axios";
 
 export default function InsertToken() {
   const [loading, setLoading] = useState(false);
