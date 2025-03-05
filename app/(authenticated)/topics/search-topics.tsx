@@ -1,11 +1,10 @@
 import React from "react";
 import { StyleSheet, SafeAreaView, View } from "react-native";
-import { SearchBar } from "@/components/common/SearchBar";
-import { Header } from "@/components/common/Header";
+import { SearchBar, Header } from "@/components/common/index";
+import { SearchResults } from "@/components/SearchResults";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
 import { useSearch } from "@/hooks/useSearch";
-import { SearchResults } from "@/components/SearchResults";
 import AZListScreen from "./az-list";
 
 export default function SearchTopicsScreen() {
@@ -20,7 +19,6 @@ export default function SearchTopicsScreen() {
           </Header>
         </Box>
 
-        {/* Content */}
         <Box style={styles.contentContainer}>
           {searchQuery.length >= 3 ? (
             <SearchResults filteredData={filteredData} />
