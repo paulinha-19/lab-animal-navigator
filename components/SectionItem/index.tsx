@@ -1,13 +1,9 @@
-import React, { memo } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import React, { memo, useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
 import { Box } from "../ui/box";
 import { handlePress } from "@/utils/handlePress";
+import { UrlSelectionModal } from "../UrlSelectionModal";
 
 interface SectionItemProps {
   title: string;
@@ -15,6 +11,10 @@ interface SectionItemProps {
 }
 
 export const SectionItem = memo(({ title, items }: SectionItemProps) => {
+  const [selectedItem, setSelectedItem] = useState<{
+    label: string;
+    urls: any[];
+  } | null>(null);
 
   return (
     <View style={styles.section}>
@@ -24,15 +24,18 @@ export const SectionItem = memo(({ title, items }: SectionItemProps) => {
       {items.map((item, index) => (
         <TouchableOpacity
           key={index}
-          onPress={() => handlePress(item.label, item.urls)}
+          onPress={() => handlePress(item, setSelectedItem)}
         >
-          {/* <View key={index}> */}
           <View style={styles.resultItem}>
             <Text style={styles.itemText}>{item.label}</Text>
             <Feather name="chevron-right" size={20} color="#fff" />
           </View>
         </TouchableOpacity>
       ))}
+      <UrlSelectionModal
+        selectedItem={selectedItem}
+        setSelectedItem={setSelectedItem}
+      />
     </View>
   );
 });
@@ -42,19 +45,19 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   containerSectionTitle: {
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#737373",
+    color: "black",
     paddingStart: 5,
   },
   itemText: {
     fontSize: 16,
     color: "#ffffff",
     paddingVertical: 10,
-    paddingStart: 2,  
+    paddingStart: 2,
   },
   resultItem: {
     flexDirection: "row",
@@ -62,5 +65,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 1,
     width: "100%",
+  },
+  footerContainer: {
+    marginTop: 10,
   },
 });
