@@ -111,7 +111,16 @@ export const DrawerMenu = () => {
               />
               <Text style={styles.textDrawer}>Cálculos</Text>
             </Pressable>
-            <Pressable style={styles.bodyDrawerContainer}>
+            <Pressable
+              style={styles.bodyDrawerContainer}
+              onPress={() =>
+                navigateTo(
+                  "https://play.google.com/store/apps/details?id=com.paulinha19.labanimalnavigator",
+                  setShowDrawer,
+                  router
+                )
+              }
+            >
               <FontAwesome
                 name="thumbs-o-up"
                 size={24}
