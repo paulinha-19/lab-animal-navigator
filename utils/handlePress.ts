@@ -1,27 +1,25 @@
-import { Alert, Linking } from "react-native";
+import { Linking } from "react-native";
+import { router } from "expo-router";
 
 interface UrlItem {
-  name: string;
-  url: string;
+  label: string;
+  urls: { name: string; url: string }[];
 }
 
-export const handlePress = (label: string, urls: UrlItem[]) => {
-  if (urls.length === 1) {
-    Linking.openURL(urls[0].url).catch(() =>
-      Alert.alert("Erro", "Não foi possível abrir a URL.")
-    );
+export const handlePress = (
+  item: UrlItem,
+  setSelectedItem: (item: UrlItem | null) => void
+) => {
+  if (item.urls.length === 1) {
+    const { url } = item.urls[0];
+    if (url.endsWith(".pdf")) {
+      router.navigate(`/(authenticated)/pdf-viewer`);
+    } else {
+      Linking.openURL(url)
+      .catch(() => alert("Erro ao abrir a URL."));
+      setSelectedItem(null);
+    }
   } else {
-    Alert.alert(
-      label,
-      "Escolha uma das opções:",
-      urls.map((item) => ({
-        text: item.name,
-        onPress: () =>
-          Linking.openURL(item.url).catch(() =>
-            Alert.alert("Erro", "Não foi possível abrir a URL.")
-          ),
-      })),
-      { cancelable: true }
-    );
+    setSelectedItem(item);
   }
 };
