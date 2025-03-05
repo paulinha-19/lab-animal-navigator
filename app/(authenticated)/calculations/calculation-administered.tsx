@@ -134,24 +134,16 @@ export default function CalculationAdministeredScreen() {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Center>
-        <Modal isOpen={showModal} onClose={handleCloseModal} size="md">
-          <ModalBackdrop />
-          <ModalContent>
-            <ModalHeader>
-              <Text style={styles.modalTitle}>Resultado</Text>
-            </ModalHeader>
-            <ModalBody>
-              {results && <CalculationAdministeredResults results={results} />}
-            </ModalBody>
-            <ModalFooter>
-              <Button variant="solid" onPress={handleCloseModal}>
-                <ButtonText>Fechar</ButtonText>
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </Center>
+      <CustomAlert
+        visible={showModal}
+        heading="Resultado"
+        onClose={handleCloseModal}
+        size="md"
+      >
+        <View>
+          {results && <CalculationAdministeredResults results={results} />}
+        </View>
+      </CustomAlert>
     </SafeAreaView>
   );
 }
@@ -180,10 +172,5 @@ const styles = StyleSheet.create({
   },
   spaceBettwenInput: {
     marginTop: 15,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: Colors.light.background,
   },
 });
