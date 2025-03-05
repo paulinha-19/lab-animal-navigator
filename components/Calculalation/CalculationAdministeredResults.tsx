@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { Colors } from "@/constants/Colors";
 
 interface CalculationAdministeredResultsProps {
   results: {
@@ -33,7 +32,7 @@ export const CalculationAdministeredResults = ({
 const styles = StyleSheet.create({
   modalText: {
     fontSize: 16,
-    color: Colors.light.background,
+    color: "black",
     marginVertical: 5,
   },
 });
