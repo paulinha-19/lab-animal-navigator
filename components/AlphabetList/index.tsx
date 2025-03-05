@@ -1,6 +1,5 @@
-import { TouchableWithoutFeedback, View, Text, StyleSheet } from "react-native";
+import { TouchableWithoutFeedback, View, Text, StyleSheet, PanResponderInstance } from "react-native";
 import React, { memo } from "react";
-import { PanResponderInstance } from "react-native";
 
 interface AlphabetListProps {
   onSelectLetter: (letter: string) => void;
