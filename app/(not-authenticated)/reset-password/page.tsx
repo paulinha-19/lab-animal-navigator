@@ -9,19 +9,19 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
+import { AxiosError } from "axios";
+import { Link, router } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ResetType } from "@/types/auth-data";
-import resetPasswordSchema from "@/schemas/reset-password";
-import { ControlledInput } from "@/components";
+import { useForm } from "react-hook-form";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, router } from "expo-router";
+import { ResetType } from "@/types/index";
+import {resetPasswordSchema} from "@/schemas/index";
+import { ControlledInput } from "@/components";
 import { useAuth } from "@/hooks/useAuth";
 import { resetPasswordRequest } from "@/services/auth";
-import { AxiosError } from "axios";
 
 export default function ResetPassword() {
   const [showPassword, setShowPassword] = useState(true);

@@ -1,12 +1,7 @@
-import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import Feather from "@expo/vector-icons/Feather";
-import { Divider } from "@/components";
+import { Divider, UrlSelectionModal } from "@/components/index";
 import { handlePress } from "@/utils/handlePress";
 
 interface SearchResultItem {
@@ -18,17 +13,22 @@ interface SearchResultsProps {
   filteredData: SearchResultItem[];
 }
 export const SearchResults = ({ filteredData }: SearchResultsProps) => {
+  const [selectedItem, setSelectedItem] = useState<{
+    label: string;
+    urls: any[];
+  } | null>(null);
+
   return (
     <View>
       {filteredData.length > 0 ? (
-        <>
+        <View>
           <Text style={styles.resultsText}>
             {`${filteredData.length} resultado(s) encontrado(s)`}
           </Text>
           {filteredData.map((item, index) => (
             <TouchableOpacity
               key={index}
-              onPress={() => handlePress(item.label, item.urls)}
+              onPress={() => handlePress(item, setSelectedItem)}
             >
               <View style={styles.resultItem}>
                 <Text style={styles.resultText}>{item.label}</Text>
@@ -37,10 +37,14 @@ export const SearchResults = ({ filteredData }: SearchResultsProps) => {
               <Divider />
             </TouchableOpacity>
           ))}
-        </>
+        </View>
       ) : (
         <Text style={styles.resultsText}>Nenhum resultado encontrado</Text>
       )}
+      <UrlSelectionModal
+        selectedItem={selectedItem}
+        setSelectedItem={setSelectedItem}
+      />
     </View>
   );
 };
@@ -64,5 +68,8 @@ const styles = StyleSheet.create({
   resultText: {
     color: "#fff",
     fontSize: 16,
+  },
+  footerContainer: {
+    marginTop: 10,
   },
 });

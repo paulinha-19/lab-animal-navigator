@@ -10,18 +10,18 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { Link, router } from "expo-router";
-import { Colors } from "@/constants/Colors";
+import { LinearGradient } from "expo-linear-gradient";
+import { AxiosError } from "axios";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Box } from "@/components/ui/box";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PasswordEmail } from "@/types/auth-data";
-import emailPasswordSchema from "@/schemas/email-password";
-import { ControlledInput } from "@/components";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { LinearGradient } from "expo-linear-gradient";
+import { PasswordEmail } from "@/types/index";
+import {emailPasswordSchema} from "@/schemas/index";
+import { ControlledInput } from "@/components/index";
 import { useAuth } from "@/hooks/useAuth";
-import { AxiosError } from "axios";
+import { Colors } from "@/constants/Colors";
 
 export default function SignUpScreen() {
   const [showPassword, setShowPassword] = useState(true);

@@ -9,18 +9,18 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
+import { Link, router } from "expo-router";
+import { useForm } from "react-hook-form";
+import { AxiosError } from "axios";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ForgotPasswordType } from "@/types/auth-data";
-import forgotPasswordSchema from "@/schemas/forgot-password";
-import { ControlledInput } from "@/components";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, router } from "expo-router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ForgotPasswordType } from "../../../types/index";
+import {forgotPasswordSchema} from "@/schemas/index";
+import { ControlledInput } from "@/components/index";
 import { useAuth } from "@/hooks/useAuth";
-import { AxiosError } from "axios";
 
 export default function ForgotPassword() {
   const [loading, setLoading] = useState(false);

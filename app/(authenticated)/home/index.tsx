@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { DrawerMenu } from "@/components";
+import {  router } from "expo-router";
+import { DrawerMenu, TypewriterText } from "@/components";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
-import { Link, router } from "expo-router";
+import { lanaMessages } from "@/data/typewriter";
+
 export default function HomeScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -25,7 +27,6 @@ export default function HomeScreen() {
             />
             <Text style={styles.textLogo}>LabAnimal</Text>
             <Text style={styles.textLogo}>Navigator</Text>
-            {/* <Text style={{ ...styles.textTopics, marginTop: 80 }}>Tópicos</Text> */}
             <Text
               onPress={() =>
                 router.navigate("/(authenticated)/topics/search-topics")
@@ -38,16 +39,22 @@ export default function HomeScreen() {
         </Box>
       </ScrollView>
       {/* Floating Action Button (FAB) */}
-      <TouchableOpacity
-        style={styles.fab}
-        onPress={() => router.navigate("/(authenticated)/bot-lana")}
-      >
-        <Image
-          style={styles.lanaIcon}
-          source={require("../../../assets/images/LANA_icon.png")}
-        />
-        <View style={styles.badge} />
-      </TouchableOpacity>
+      <View style={styles.lanaContainer}>
+        <View style={styles.speechBubble}>
+          <TypewriterText messages={lanaMessages} style={styles.speechText} />
+          {/* <View style={styles.speechBubbleTriangle} /> */}
+        </View>
+        <TouchableOpacity
+          style={styles.fab}
+          onPress={() => router.navigate("/(authenticated)/bot-lana")}
+        >
+          <Image
+            style={styles.lanaIcon}
+            source={require("../../../assets/images/LANA_icon.png")}
+          />
+          <View style={styles.badge} />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 }
@@ -74,36 +81,75 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: "center",
   },
+  lanaContainer: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+  },
+  speechBubble: {
+    position: "absolute",
+    backgroundColor: "white",
+    right: 100,
+    bottom: 70,
+    width: 170,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 15,
+    borderBottomRightRadius: 0,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    borderWidth: 1,
+    borderColor: "#153d72",
+  },
+  speechBubbleTriangle: {
+    position: "absolute",
+    top: 54,
+    right: -10,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderTopWidth: 10,
+    borderLeftColor: "transparent",
+    borderRightColor: "transparent",
+    borderTopColor: "white",
+    transform: [{ rotateX: "-180deg" }, { rotateZ: "-180deg" }],
+  },
+  speechText: {
+    textAlign: "center",
+    fontSize: 12,
+    color: "black",
+  },
   fab: {
     position: "absolute",
-    bottom: 20,
-    right: 20,
-    width: 60,
-    height: 60,
-    borderRadius: 35,
-    backgroundColor: Colors.light.background,
     alignItems: "center",
     justifyContent: "center",
+    bottom: 20,
+    right: 20,
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    backgroundColor: Colors.light.background,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5,
+    elevation: 8,
   },
   lanaIcon: {
-    width: 55,
-    height: 55,
+    width: 75,
+    height: 75,
     resizeMode: "contain",
   },
   badge: {
     position: "absolute",
-    bottom: 0,
-    right: 5,
+    backgroundColor: "green",
+    borderColor: "white",
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: "green",
+    bottom: 5,
+    right: 5,
     borderWidth: 2,
-    borderColor: Colors.light.background,
   },
 });

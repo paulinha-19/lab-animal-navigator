@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, Pressable, Alert } from "react-native";
-import { Box } from "@/components/ui/box";
+import { AxiosError } from "axios";
+import { router } from "expo-router";
+import { StyleSheet, Text, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import { Box } from "@/components/ui/box";
 import {
   Drawer,
   DrawerBackdrop,
@@ -15,11 +17,8 @@ import {
 } from "@/components/ui/drawer";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Colors } from "@/constants/Colors";
-import { router } from "expo-router";
 import { navigateTo } from "@/utils/drawer-menu";
 import { useAuth } from "@/hooks/useAuth";
-import { AxiosError } from "axios";
-import * as Linking from "expo-linking";
 
 export const DrawerMenu = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -39,9 +38,7 @@ export const DrawerMenu = () => {
   };
 
   const openBiologyUrl = () => {
-    Linking.openURL(
-      "https://www.gov.br/mcti/pt-br/composicao/conselhos/concea/arquivos/arquivo/publicacoes-do-concea/guia_concea_1ed_animais-_ensino_ou_pesquisa_2023.pdf"
-    ).catch((err) =>  Alert.alert("Erro", "Não foi possível abrir a URL"));
+    router.navigate(`/(authenticated)/pdf-viewer`);
     setShowDrawer(false);
   };
 
@@ -53,15 +50,12 @@ export const DrawerMenu = () => {
         start={{ x: -0.8, y: 1 }}
         end={{ x: 1.2, y: 1 }}
       >
-        <MaterialIcons
-          name="menu"
-          size={24}
-          color="white"
-          style={styles.iconDrawer}
-          onPress={() => {
-            setShowDrawer(true);
-          }}
-        />
+        <Pressable
+          style={styles.iconContainer}
+          onPress={() => setShowDrawer(true)}
+        >
+          <MaterialIcons name="menu" size={24} color="black" />
+        </Pressable>
       </LinearGradient>
       <Drawer
         isOpen={showDrawer}
@@ -117,7 +111,16 @@ export const DrawerMenu = () => {
               />
               <Text style={styles.textDrawer}>Cálculos</Text>
             </Pressable>
-            <Pressable style={styles.bodyDrawerContainer}>
+            <Pressable
+              style={styles.bodyDrawerContainer}
+              onPress={() =>
+                navigateTo(
+                  "https://play.google.com/store/apps/details?id=com.paulinha19.labanimalnavigator",
+                  setShowDrawer,
+                  router
+                )
+              }
+            >
               <FontAwesome
                 name="thumbs-o-up"
                 size={24}
@@ -129,10 +132,12 @@ export const DrawerMenu = () => {
           <DrawerFooter>
             <Button
               className="w-full gap-2"
-              action="secondary"
               onPress={onSubmit}
+              style={styles.logoutButton}
             >
-              <ButtonText>Sair do aplicativo</ButtonText>
+              <ButtonText style={styles.textLogoutButton}>
+                Sair do aplicativo
+              </ButtonText>
               <SimpleLineIcons name="logout" size={24} color="black" />
             </Button>
           </DrawerFooter>
@@ -145,8 +150,24 @@ export const DrawerMenu = () => {
 const styles = StyleSheet.create({
   circularGradient: {
     width: "100%",
-    height: 40,
+    height: 50,
     justifyContent: "center",
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: "#35629d",
+    marginLeft: 5,
   },
   iconDrawer: {
     paddingHorizontal: 5,
@@ -160,5 +181,21 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 16,
     color: Colors.light.text,
+  },
+  logoutButton: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: "#35629d",
+    marginLeft: 5,
+  },
+  textLogoutButton: {
+    color: "black",
   },
 });

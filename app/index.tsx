@@ -1,7 +1,5 @@
 import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { Colors } from "@/constants/Colors";
-import { useAuth } from "@/hooks/useAuth";
-import { Text } from "react-native";
 
 export default function Index() {
   return (

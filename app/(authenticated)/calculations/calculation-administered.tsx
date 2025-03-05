@@ -7,25 +7,15 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { Colors } from "@/constants/Colors";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import calculationAdministeredSchema from "@/schemas/calculation-administered";
 import { LinearGradient } from "expo-linear-gradient";
-import { ControlledInput, CalculationAdministeredResults } from "@/components";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { calculationAdministeredSchema } from "../../../schemas/index";
+import { CalculationAdministeredForm } from "@/types/index";
+import { ControlledInput, CalculationAdministeredResults, CustomAlert } from "@/components";
 import { ControlledSelect } from "@/components/common/ControlledSelect";
-import { CalculationAdministeredForm } from "@/schemas/calculation-administered";
-import {
-  Modal,
-  ModalBackdrop,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@/components/ui/modal";
-import { Center } from "@/components/ui/center";
-import { Button, ButtonText } from "@/components/ui/button";
 import { SPECIES, LINEAGE, PHASELIFE } from "@/data/calculation";
+import { Colors } from "@/constants/Colors";
 
 export default function CalculationAdministeredScreen() {
   const [results, setResults] = useState<{
@@ -50,17 +40,15 @@ export default function CalculationAdministeredScreen() {
       selectLineage: "",
       selectPhaseLife: "",
       numberAnimals: "",
-      amountFeed: "",
     },
     resolver: zodResolver(calculationAdministeredSchema),
   });
 
   const onSubmit = (data: CalculationAdministeredForm) => {
     const numberAnimals = parseFloat(data.numberAnimals as any);
-    const amountFeed = parseFloat(data.amountFeed as any);
 
-    if (!isNaN(numberAnimals) && !isNaN(amountFeed)) {
-      const grams = numberAnimals * amountFeed;
+    if (!isNaN(numberAnimals)) {
+      const grams = numberAnimals;
       const kg = grams / 1000;
 
       setResults({
@@ -132,21 +120,6 @@ export default function CalculationAdministeredScreen() {
             sizeLabel={16}
             sizeError={14}
           />
-          <ControlledInput
-            control={control}
-            name="amountFeed"
-            placeholder="Insira um valor"
-            placeholderColor="#ddd"
-            label="Quantidade de ração"
-            autoCapitalize="none"
-            keyboardType="number-pad"
-            errorMessage={errors?.amountFeed?.message}
-            borderColorInputFocus="#7589A4"
-            borderColorInputBlur="#7589A4"
-            backgroundColorInput="#7589A4"
-            sizeLabel={16}
-            sizeError={14}
-          />
         </View>
         <View style={styles.buttonSubmitContainer}>
           <TouchableOpacity onPress={handleSubmit(onSubmit)}>
@@ -161,24 +134,16 @@ export default function CalculationAdministeredScreen() {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Center>
-        <Modal isOpen={showModal} onClose={handleCloseModal} size="md">
-          <ModalBackdrop />
-          <ModalContent>
-            <ModalHeader>
-              <Text style={styles.modalTitle}>Resultado</Text>
-            </ModalHeader>
-            <ModalBody>
-              {results && <CalculationAdministeredResults results={results} />}
-            </ModalBody>
-            <ModalFooter>
-              <Button variant="solid" onPress={handleCloseModal}>
-                <ButtonText>Fechar</ButtonText>
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </Center>
+      <CustomAlert
+        visible={showModal}
+        heading="Resultado"
+        onClose={handleCloseModal}
+        size="md"
+      >
+        <View>
+          {results && <CalculationAdministeredResults results={results} />}
+        </View>
+      </CustomAlert>
     </SafeAreaView>
   );
 }
@@ -207,10 +172,5 @@ const styles = StyleSheet.create({
   },
   spaceBettwenInput: {
     marginTop: 15,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: Colors.light.background,
   },
 });
