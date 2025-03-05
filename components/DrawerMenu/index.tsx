@@ -50,15 +50,12 @@ export const DrawerMenu = () => {
         start={{ x: -0.8, y: 1 }}
         end={{ x: 1.2, y: 1 }}
       >
-        <MaterialIcons
-          name="menu"
-          size={24}
-          color="white"
-          style={styles.iconDrawer}
-          onPress={() => {
-            setShowDrawer(true);
-          }}
-        />
+        <Pressable
+          style={styles.iconContainer}
+          onPress={() => setShowDrawer(true)}
+        >
+          <MaterialIcons name="menu" size={24} color="black" />
+        </Pressable>
       </LinearGradient>
       <Drawer
         isOpen={showDrawer}
@@ -142,8 +139,24 @@ export const DrawerMenu = () => {
 const styles = StyleSheet.create({
   circularGradient: {
     width: "100%",
-    height: 40,
+    height: 50,
     justifyContent: "center",
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 10,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: "#35629d",
+    marginLeft: 5,
   },
   iconDrawer: {
     paddingHorizontal: 5,
