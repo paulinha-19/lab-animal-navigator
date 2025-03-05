@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { DrawerMenu } from "@/components";
+import {  router } from "expo-router";
+import { DrawerMenu, TypewriterText } from "@/components";
 import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
-import { Link, router } from "expo-router";
+import { lanaMessages } from "@/data/typewriter";
+
 export default function HomeScreen() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
