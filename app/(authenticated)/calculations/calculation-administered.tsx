@@ -7,25 +7,15 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import { Colors } from "@/constants/Colors";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import calculationAdministeredSchema from "@/schemas/calculation-administered";
 import { LinearGradient } from "expo-linear-gradient";
-import { ControlledInput, CalculationAdministeredResults } from "@/components";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { calculationAdministeredSchema } from "../../../schemas/index";
+import { CalculationAdministeredForm } from "@/types/index";
+import { ControlledInput, CalculationAdministeredResults, CustomAlert } from "@/components";
 import { ControlledSelect } from "@/components/common/ControlledSelect";
-import { CalculationAdministeredForm } from "@/schemas/calculation-administered";
-import {
-  Modal,
-  ModalBackdrop,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@/components/ui/modal";
-import { Center } from "@/components/ui/center";
-import { Button, ButtonText } from "@/components/ui/button";
 import { SPECIES, LINEAGE, PHASELIFE } from "@/data/calculation";
+import { Colors } from "@/constants/Colors";
 
 export default function CalculationAdministeredScreen() {
   const [results, setResults] = useState<{
