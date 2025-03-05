@@ -9,12 +9,11 @@ import {
 } from "react-native";
 import { Colors } from "@/constants/Colors";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import calculationAdministeredSchema from "@/schemas/calculation-administered";
 import { LinearGradient } from "expo-linear-gradient";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {calculationAdministeredSchema, CalculationAdministeredForm } from "@/schemas/index";
 import { ControlledInput } from "@/components";
 import { ControlledSelect } from "@/components/common/ControlledSelect";
-import { CalculationAdministeredForm } from "@/schemas/calculation-administered";
 import {
   Modal,
   ModalBackdrop,
