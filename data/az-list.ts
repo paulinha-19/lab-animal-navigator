@@ -14,6 +14,20 @@ export const DATA = [
     ],
   },
   {
+    key: "D",
+    items: [
+      {
+        label: "Diretiva Europeia",
+        urls: [
+          {
+            name: "",
+            url: "https://eur-lex.europa.eu/legal-content/PT/TXT/HTML/?uri=CELEX:32010L0063",
+          },
+        ],
+      },
+    ],
+  },
+  {
     key: "L",
     items: [
       {
@@ -30,16 +44,7 @@ export const DATA = [
             url: "https://www.gov.br/mcti/pt-br/composicao/conselhos/concea/paginas/publicacoes-legislacao-e-guia/legislacao-do-concea",
           },
         ],
-      },
-      {
-        label: "Legislaçãlego diretiva europeia",
-        urls: [
-          {
-            name: "",
-            url: "https://eur-lex.europa.eu/legal-content/PT/TXT/HTML/?uri=CELEX:32010L0063",
-          },
-        ],
-      },
+      }
     ],
   },
   {
@@ -53,7 +58,7 @@ export const DATA = [
             url: "https://arriveguidelines.org/arrive-guidelines",
           },
           {
-            name: "Norecopa",
+            name: "Prepare",
             url: "https://norecopa.no/prepare/prepare-checklist/",
           },
         ],
@@ -62,10 +67,10 @@ export const DATA = [
         label: "Ponto final humanitário",
         urls: [
           {
-            name: "Atena",
+            name: "E-book",
             url: "https://atenaeditora.com.br/catalogo/ebook/guia-de-finalizacao-humanitaria-aplicada-a-roedores-utilizados-em-pesquisas",
           },
-          { name: "AnimalPain", url: "https://animalpain.org/en/home-en/" },
+          { name: "Animal Pain app", url: "https://animalpain.org/en/home-en/" },
         ],
       },
     ],
