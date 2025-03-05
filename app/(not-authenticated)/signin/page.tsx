@@ -7,21 +7,22 @@ import {
   TouchableOpacity,
   Platform,
   ActivityIndicator,
+  SafeAreaView, 
+  ScrollView
 } from "react-native";
+import { AxiosError } from "axios";
+import { LinearGradient } from "expo-linear-gradient";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { Link, router } from "expo-router";
-import { Colors } from "@/constants/Colors";
 import { Box } from "@/components/ui/box";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PasswordEmail } from "@/types/auth-data";
-import emailPasswordSchema from "@/schemas/email-password";
-import { ControlledInput } from "@/components";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { LinearGradient } from "expo-linear-gradient";
-import { SafeAreaView, ScrollView } from "react-native";
-import { AxiosError } from "axios";
+import { PasswordEmail } from "@/types/index";
+import {emailPasswordSchema} from "@/schemas/index";
+import { ControlledInput } from "@/components/index";
 import { useAuth } from "@/hooks/useAuth";
+import { Colors } from "@/constants/Colors";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(true);
