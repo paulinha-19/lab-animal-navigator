@@ -132,10 +132,12 @@ export const DrawerMenu = () => {
           <DrawerFooter>
             <Button
               className="w-full gap-2"
-              action="secondary"
               onPress={onSubmit}
+              style={styles.logoutButton}
             >
-              <ButtonText>Sair do aplicativo</ButtonText>
+              <ButtonText style={styles.textLogoutButton}>
+                Sair do aplicativo
+              </ButtonText>
               <SimpleLineIcons name="logout" size={24} color="black" />
             </Button>
           </DrawerFooter>
@@ -179,5 +181,21 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 16,
     color: Colors.light.text,
+  },
+  logoutButton: {
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderWidth: 1,
+    borderColor: "#35629d",
+    marginLeft: 5,
+  },
+  textLogoutButton: {
+    color: "black",
   },
 });
