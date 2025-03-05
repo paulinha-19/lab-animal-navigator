@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, Pressable, Alert } from "react-native";
-import { Box } from "@/components/ui/box";
+import { AxiosError } from "axios";
+import { router } from "expo-router";
+import { StyleSheet, Text, Pressable } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import { Box } from "@/components/ui/box";
 import {
   Drawer,
   DrawerBackdrop,
@@ -15,11 +17,8 @@ import {
 } from "@/components/ui/drawer";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Colors } from "@/constants/Colors";
-import { router } from "expo-router";
 import { navigateTo } from "@/utils/drawer-menu";
 import { useAuth } from "@/hooks/useAuth";
-import { AxiosError } from "axios";
-import * as Linking from "expo-linking";
 
 export const DrawerMenu = () => {
   const [showDrawer, setShowDrawer] = useState(false);
