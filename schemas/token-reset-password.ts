@@ -8,5 +8,3 @@ const tokenResetPasswordSchema = z.object({
 });
 
 export default tokenResetPasswordSchema;
-
-export type TokenResetPasswordType = z.infer<typeof tokenResetPasswordSchema>;
