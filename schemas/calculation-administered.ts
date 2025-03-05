@@ -7,15 +7,7 @@ const calculationAdministeredSchema = z.object({
   numberAnimals: z
     .string()
     .nonempty("Campo obrigatório")
-    .regex(/^[1-9]\d*$/, "O valor não pode começar com 0"),
-  amountFeed: z
-    .string()
-    .nonempty("Campo obrigatório")
-    .regex(/^[1-9]\d*$/, "O valor não pode começar com 0"),
+    .regex(/^[1-9]\d*$/, "O valor não pode começar com 0")
 });
 
 export default calculationAdministeredSchema;
-
-export type CalculationAdministeredForm = z.infer<
-  typeof calculationAdministeredSchema
->;
