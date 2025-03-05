@@ -38,9 +38,7 @@ export const DrawerMenu = () => {
   };
 
   const openBiologyUrl = () => {
-    Linking.openURL(
-      "https://www.gov.br/mcti/pt-br/composicao/conselhos/concea/arquivos/arquivo/publicacoes-do-concea/guia_concea_1ed_animais-_ensino_ou_pesquisa_2023.pdf"
-    ).catch((err) =>  Alert.alert("Erro", "Não foi possível abrir a URL"));
+    router.navigate(`/(authenticated)/pdf-viewer`);
     setShowDrawer(false);
   };
 
