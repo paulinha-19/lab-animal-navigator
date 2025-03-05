@@ -34,15 +34,6 @@ export default function AuthenticatedLayout() {
             headerTintColor: "#fff",
           }}
         />
-        {/* <Stack.Screen
-          name="topics/az-list"
-          options={{
-            title: "A-Z",
-            headerTitleStyle: { fontSize: 16 },
-            headerStyle: { backgroundColor: "#153d72" },
-            headerTintColor: "#fff",
-          }}
-        /> */}
         <Stack.Screen
           name="calculations/calculations"
           options={{
@@ -65,6 +56,15 @@ export default function AuthenticatedLayout() {
           name="calculations/calculation-administered"
           options={{
             title: "Cálculo de quantidade de ração administrada",
+            headerTitleStyle: { fontSize: 16 },
+            headerStyle: { backgroundColor: "#153d72" },
+            headerTintColor: "#fff",
+          }}
+        />
+        <Stack.Screen
+          name="pdf-viewer/index"
+          options={{
+            title: "PDF",
             headerTitleStyle: { fontSize: 16 },
             headerStyle: { backgroundColor: "#153d72" },
             headerTintColor: "#fff",
