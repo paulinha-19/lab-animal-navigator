@@ -40,17 +40,15 @@ export default function CalculationAdministeredScreen() {
       selectLineage: "",
       selectPhaseLife: "",
       numberAnimals: "",
-      amountFeed: "",
     },
     resolver: zodResolver(calculationAdministeredSchema),
   });
 
   const onSubmit = (data: CalculationAdministeredForm) => {
     const numberAnimals = parseFloat(data.numberAnimals as any);
-    const amountFeed = parseFloat(data.amountFeed as any);
 
-    if (!isNaN(numberAnimals) && !isNaN(amountFeed)) {
-      const grams = numberAnimals * amountFeed;
+    if (!isNaN(numberAnimals)) {
+      const grams = numberAnimals;
       const kg = grams / 1000;
 
       setResults({
@@ -116,21 +114,6 @@ export default function CalculationAdministeredScreen() {
             autoCapitalize="none"
             keyboardType="number-pad"
             errorMessage={errors?.numberAnimals?.message}
-            borderColorInputFocus="#7589A4"
-            borderColorInputBlur="#7589A4"
-            backgroundColorInput="#7589A4"
-            sizeLabel={16}
-            sizeError={14}
-          />
-          <ControlledInput
-            control={control}
-            name="amountFeed"
-            placeholder="Insira um valor"
-            placeholderColor="#ddd"
-            label="Quantidade de ração"
-            autoCapitalize="none"
-            keyboardType="number-pad"
-            errorMessage={errors?.amountFeed?.message}
             borderColorInputFocus="#7589A4"
             borderColorInputBlur="#7589A4"
             backgroundColorInput="#7589A4"
