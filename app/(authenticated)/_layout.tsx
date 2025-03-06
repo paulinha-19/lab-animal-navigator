@@ -64,7 +64,7 @@ export default function AuthenticatedLayout() {
         <Stack.Screen
           name="pdf-viewer/index"
           options={{
-            title: "PDF",
+            title: "Biologia e manejo",
             headerTitleStyle: { fontSize: 16 },
             headerStyle: { backgroundColor: "#153d72" },
             headerTintColor: "#fff",
