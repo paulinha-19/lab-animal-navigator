@@ -2,7 +2,7 @@
   "expo": {
     "name": "lab-animal-navigator",
     "slug": "lab-animal-navigator",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -18,7 +18,7 @@
       "bundleIdentifier": "myapp"
     },
     "android": {
-      "versionCode": 3,
+      "versionCode": 4,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#153d72"
