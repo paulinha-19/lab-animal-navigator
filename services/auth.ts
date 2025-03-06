@@ -1,5 +1,5 @@
-import { PasswordEmail, ResetType, TokenType } from "@/types/auth-data";
-import { TokenResetPasswordType } from "@/schemas/token-reset-password";
+import { PasswordEmail, ResetType } from "@/types/auth-data";
+import { TokenResetPasswordType } from "@/types/index";
 import { ForgotPasswordType } from "@/types/auth-data";
 import { Alert } from "react-native";
 import { ErrorResponse } from "@/interface/auth";
