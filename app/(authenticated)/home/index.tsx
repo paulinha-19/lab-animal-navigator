@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   speechText: {
     textAlign: "center",
-    fontSize: 12,
+    fontSize: 14,
     color: "black",
   },
   fab: {
