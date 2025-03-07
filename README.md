@@ -24,6 +24,9 @@ O app LabAnimalNavigator irá facilitar a consulta à informações diversas fon
 
 ![calc screen - v](https://github.com/user-attachments/assets/c99ca1cf-30b3-4b66-88e6-8b3bcd1309a0)
 
+# API
+https://github.com/paulinha-19/backend-labanimal-navigator
+
 
 # Welcome to your Expo app 👋
 
