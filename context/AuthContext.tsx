@@ -1,36 +1,3 @@
-// import React, { createContext, useState, useEffect, useContext } from "react";
-// import { Session } from "@supabase/supabase-js";
-// import { User } from "@supabase/supabase-js";
-
-// interface AuthContextProps {
-//   user: User | null;
-//   setAuth: (authUser: User | null) => void;
-// }
-
-// const AuthContext = createContext({} as AuthContextProps);
-
-// export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-//   const [user, setUser] = useState<User | null>(null);
-//   const [session, setSession] = useState<Session | null>(null);
-
-//   function setAuth(authUser: User | null) {
-//     setUser(authUser);
-//   }
-
-//   return (
-//     <AuthContext.Provider
-//       value={{
-//         user,
-//         setAuth,
-//       }}
-//     >
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
-
-// export const useAuth = () => useContext(AuthContext);
-
 import { createContext, useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { IAuthProvider, IAuthContext } from "@/interface/auth";
@@ -75,6 +42,21 @@ export const AuthProvider = ({ children }: IAuthProvider) => {
   }, []);
 
   const signIn = async ({ email, password }: PasswordEmail) => {
+    const MOCK_EMAIL = "usertest@gmail.com";
+    const MOCK_PASSWORD = "12345678";
+  
+    // Login without API
+    if (email === MOCK_EMAIL && password === MOCK_PASSWORD) {
+      const mockedUser = {
+        token: "mocked-token",
+        message: "Login mockado",
+      };
+      await SecureStore.setItemAsync("token", mockedUser.token);
+      setUser(mockedUser);
+      return;
+    }
+
+    // Login with API
     const { data, request } = await signInRequest({
       email,
       password,
